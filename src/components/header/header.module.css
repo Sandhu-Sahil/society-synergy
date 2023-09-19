@@ -1,0 +1,179 @@
+.header {
+  --_img-h: 6.666vh;
+  background-color: #0d0d0d;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 3%;
+  z-index: 10;
+}
+
+@media (max-width: 599.5px) {
+  .header {
+    --_menu-visible: none;
+    --_menuButton-visible: flex;
+  }
+
+  .header .drawer {
+    right: 50vw;
+    top: 0%;
+  }
+  .header .resourcedrawer {
+    right: 50vw;
+    top: 0%;
+  }
+}
+@media (min-width: 600px) {
+  .header {
+    --_menu-visible: flex;
+    --_menuButton-visible: none;
+  }
+
+  .header .drawer {
+    left: calc(25% - calc(0.8rem * 5.5));
+    top: 100%;
+    margin-right: 20px;
+  }
+
+  .header .resourcedrawer {
+    left: calc(45% - calc(0.8rem * 5.5));
+    top: 100%;
+    margin-right: 20px;
+  }
+}
+
+.header img {
+  align-self: center;
+  max-height: var(--_img-h);
+  min-height: var(--_img-min-h);
+}
+
+.header section {
+  display: var(--_menu-visible);
+  justify-content: space-evenly;
+  margin-right: 10px;
+  min-height: var(--_img-min-h);
+  position: relative;
+  min-width: 50%;
+}
+
+.header div,
+.header a {
+  align-items: center;
+  display: flex;
+  height: 100%;
+}
+
+.header a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 400;
+  text-align: center;
+  font-family: Josefin Sans;
+}
+
+#selected {
+  color: #ff9f69;
+}
+
+.header .drawer {
+  --_drawer-visible: none;
+  background-color: rgba(10, 10, 10, 0.8);
+  box-shadow: 0px 0px 20px 10px rgba(28, 27, 28, 0.8) inset;
+  display: var(--_drawer-visible);
+  flex-direction: column;
+  height: fit-content;
+  min-width: fit-content;
+  padding: 20px 0;
+  position: absolute;
+  top: 30px;
+  row-gap: 20px;
+  width: calc(30% - calc(0.8rem * 1.5));
+  z-index: 2;
+}
+
+.header .resourcedrawer {
+  --_resourcedrawer-visible: none;
+  background-color: rgba(10, 10, 10, 0.8);
+  box-shadow: 0px 0px 20px 10px rgba(28, 27, 28, 0.8) inset;
+  display: var(--_resourcedrawer-visible);
+  flex-direction: column;
+  height: fit-content;
+  min-width: fit-content;
+  padding: 20px 0;
+  position: absolute;
+  top: 30px;
+  row-gap: 20px;
+  width: calc(30% - calc(0.8rem * 1.5));
+  z-index: 2;
+}
+@media (max-width: 768px) {
+  .header .drawer {
+    top: 0;
+  }
+  .header .resourcedrawer {
+    top: 0;
+  }
+}
+.drawer a,
+.resourcedrawer a {
+  padding-inline: 20px;
+}
+
+.drawer.isVisible {
+  --_drawer-visible: flex;
+}
+
+.resourcedrawer.isVisible {
+  --_resourcedrawer-visible: flex;
+}
+
+#copy {
+  position: unset;
+  visibility: hidden;
+  z-index: 0;
+}
+
+#menuButton {
+  display: var(--_menuButton-visible);
+  padding-left: calc(50vw - var(--_img-h));
+  padding-right: 4%;
+}
+
+#menuButton img {
+  padding: 20%;
+  filter: invert(1);
+  cursor: pointer;
+}
+
+#menuDrawerVisible {
+  --_menu-visible: flex;
+  background-color: rgba(10, 10, 10, 0.8);
+  box-shadow: 0px 0px 20px 10px rgba(28, 27, 28, 0.8) inset;
+  flex-direction: column;
+  min-height: 40vh;
+  height: max-content;
+  max-height: 50vh;
+  right: 0%;
+  margin-right: 0px;
+  min-width: 50vw;
+  position: absolute;
+  top: 100%;
+  z-index: 1;
+}
+
+#menuDrawerVisible a {
+  padding-left: 20px;
+  font-size: 0.9rem;
+}
+
+#menuDrawerVisible a,
+#menuDrawerVisible div {
+  flex: 1;
+  min-height: 100%;
+}

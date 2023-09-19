@@ -9,8 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "framer-motion": "^10.16.4",
     "next": "13.4.19",
+    "pigeon-maps": "^0.21.3",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-chrono": "^2.2.7",
+    "react-dom": "18.2.0",
+    "react-grid-gallery": "^1.0.0",
+    "react-icons": "^4.11.0",
+    "react-image-lightbox": "^5.1.4",
+    "react-lottie": "^1.2.3",
+    "react-parallax-tilt": "^1.7.167",
+    "react-tsparticles": "^2.12.2",
+    "tsparticles": "^2.12.0"
   }
 }
