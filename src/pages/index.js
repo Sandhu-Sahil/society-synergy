@@ -9,14 +9,13 @@ import DisplayLottie from '@/components/Lottie';
 import Background from '@/components/Background';
 
 export default function Home({ coords, subcoords, events }) {
-  const filteredEvents = events.filter((event) => event.old === 'FALSE');
   return (
     <>
       <Head>
-        <title>NJACK</title>
-        <meta name="description" content="NJACK is a computer science club of IIT Patna." />
+        <title>Society Synergy</title>
+        <meta name="description" content="Society Synergy is an application that connects all the societies and clubs at JITT-128, Noida" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
       <Header selected={'Home'} />
       <Background />
@@ -30,9 +29,12 @@ export default function Home({ coords, subcoords, events }) {
             viewport={{ once: true }}
           >
             <Tilt>
-              <img loading="lazy" src="/home/NJACK logo.svg" alt="NJACK Logo" />
+              <img className={styles.logo} loading="lazy" src="/logo1.svg" alt="Logo" />
             </Tilt>
-            <p className={styles.subHeroText}>Not just another Computer Science Klub</p>
+            <Tilt>
+              <img className={styles.logotext} loading="lazy" src="/text.png" alt="Logo" />
+            </Tilt>
+            <p className={styles.subHeroText}>Clubbing Together Changing Forever:<br></br> Your VIP Pass to Campus Life</p>
           </motion.div>
           <motion.div
             className={styles.lottiehero}
@@ -44,43 +46,10 @@ export default function Home({ coords, subcoords, events }) {
             <DisplayLottie animationPath="https://assets3.lottiefiles.com/packages/lf20_mXdqmT1SH2.json" />
           </motion.div>
         </section>
-        <section className={styles.aboutSection}>
-          <h2>About us</h2>
-          <div>
-            <motion.div
-              className={styles.lottiehero}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 2 }}
-              viewport={{ once: true }}
-            >
-              <DisplayLottie animationPath="https://assets1.lottiefiles.com/packages/lf20_v1yudlrx.json" />
-            </motion.div>
-            <motion.p
-              initial={{ opacity: 0, x: '100%' }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 2 }}
-              viewport={{ once: true }}
-            >
-              NJACK is the esteemed Computer Science Club at IIT Patna, dedicated to fostering a
-              community of passionate computer science enthusiasts. With its wide range of
-              departments and initiatives, NJACK aims to provide a platform for students to enhance
-              their skills, engage in productive sessions, and participate in fun events. As a
-              collective entity, NJACK serves as a nurturing platform for students passionate about
-              computer science at IIT Patna. It provides a vibrant community where like-minded
-              individuals can come together to share knowledge, collaborate on projects, and stay
-              updated with the latest advancements in the field. NJACK organizes guest lectures,
-              coding competitions, hackathons, and other events to foster learning and networking
-              opportunities for its members. Through its inclusive and supportive environment, NJACK
-              strives to empower students, enabling them to excel in their computer science journey
-              and make meaningful contributions to the world of technology.
-            </motion.p>
-          </div>
-        </section>
         <section className={styles.section}>
           <h2 className={styles.sectionHeading}>Upcoming Events</h2>
           <div className={styles.cardSection}>
-            {filteredEvents.map((event, index) => (
+            {/* {filteredEvents.map((event, index) => (
               //   {event.old === false && (
               <motion.div
                 className={styles.card}
@@ -102,7 +71,7 @@ export default function Home({ coords, subcoords, events }) {
                   registerLink={event.registerLink}
                 />
               </motion.div>
-            ))}
+            ))} */}
           </div>
         </section>
         <section className={styles.section}>
@@ -262,10 +231,42 @@ export default function Home({ coords, subcoords, events }) {
           )}
           ; */}
         </section>
+        <section className={styles.aboutSection}>
+          <h2>About us</h2>
+          <div>
+            <motion.div
+              className={styles.lottiehero}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 2 }}
+              viewport={{ once: true }}
+            >
+              <DisplayLottie animationPath="https://assets1.lottiefiles.com/packages/lf20_v1yudlrx.json" />
+            </motion.div>
+            <motion.p
+              initial={{ opacity: 0, x: '100%' }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 2 }}
+              viewport={{ once: true }}
+            >
+              Society Synergy is the result of collaborative efforts by a dedicated 
+              team of developers at JIIT Sector-128 (Jaypee Institute of Information and 
+              Technology). It's a platform designed to assist JYC (JIIT Youth Club) in 
+              effectively managing their clubs and societies, while also fostering unity 
+              among our diverse community. Our mission: to empower, connect, and amplify the voices 
+              of the dynamic groups that shape JIIT's campus life. We're more than 
+              just a website; we're the catalyst for creativity, growth, and connection. 
+              We forge friendships, launch exciting events, support passion projects, 
+              and keep you informed about the latest happenings. Join us in this journey 
+              of exploration and innovation. Society Synergy - where unity meets 
+              diversity, and together, we create, inspire, and transform.
+            </motion.p>
+          </div>
+        </section>
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <img
             alt="TeamWork"
-            src="\home\team.png"
+            src="team.png"
             style={{
               marginInline: '5%',
               maxWidth: '90vw',

@@ -14,40 +14,40 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const [coords, setCoords] = useState([]);
-  const [subcoords, setSubCoords] = useState([]);
-  const [events, setEvents] = useState([]);
+  // const [coords, setCoords] = useState([]);
+  // const [subcoords, setSubCoords] = useState([]);
+  // const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/getCoords');
-        const data = await response.json();
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch('/api/getCoords');
+  //       const data = await response.json();
 
-        setCoords(data);
-        // console.log('data', data);
-        const response2 = await fetch('/api/getSubcoords');
-        const data2 = await response2.json();
-        setSubCoords(data2);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  //       setCoords(data);
+  //       // console.log('data', data);
+  //       const response2 = await fetch('/api/getSubcoords');
+  //       const data2 = await response2.json();
+  //       setSubCoords(data2);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
-    const fetchEvents = async () => {
-      try {
-        const response = await fetch('/api/getEvents');
-        const data = await response.json();
-        console.log('data', data);
-        setEvents(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  //   const fetchEvents = async () => {
+  //     try {
+  //       const response = await fetch('/api/getEvents');
+  //       const data = await response.json();
+  //       console.log('data', data);
+  //       setEvents(data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
-    fetchData();
-    fetchEvents();
-  }, []);
+  //   fetchData();
+  //   fetchEvents();
+  // }, []);
 
   useEffect(() => {
     let timer;
@@ -75,7 +75,7 @@ export default function App({ Component, pageProps }) {
       {loading ? (
         <Loader />
       ) : (
-        <Component {...pageProps} coords={coords} subcoords={subcoords} events={events} />
+        <Component {...pageProps} />
       )}
     </main>
   );

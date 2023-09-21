@@ -27,7 +27,8 @@ const HeaderComp = ({ selected }) => {
   return (
     <>
       <Link href="/">
-        <img id={styles.logo} loading="lazy" src="/home/NJACK logo.svg" alt="NJACK Logo" />
+        <img loading="lazy" width={30} src="/logo1.svg" alt="Logo" />
+        <img loading="lazy" width={180} src="/text.png" alt="Logo" />
       </Link>
       <section>
         <Link
@@ -46,16 +47,6 @@ const HeaderComp = ({ selected }) => {
             DEPARTMENTS
           </Link>
           {isDrawerVisible && <DeptDrawer isVisible={isDrawerVisible} />}
-        </div>
-        <div
-          onMouseEnter={resourceDrawerHandleMouse}
-          onMouseLeave={resourceDrawerHandleMouse}
-          style={{ display: 'flex', height: '30px' }}
-        >
-          <Link id={selected == 'Resources' ? styles.selected : undefined} href="#">
-            RESOURCES
-          </Link>
-          {isResourceDrawerVisible && <ResourceDrawer isVisible={isResourceDrawerVisible} />}
         </div>
         <Link
           style={{ height: '30px' }}
@@ -116,16 +107,6 @@ const MenuDrawer = ({
         </Link>
         {isDrawerVisible && <DeptDrawer isVisible={isDrawerVisible} />}
       </div>
-      <div
-        onMouseEnter={resourceDrawerHandleMouse}
-        onMouseLeave={resourceDrawerHandleMouse}
-        style={{ display: 'flex' }}
-      >
-        <Link id={selected == 'Resources' ? styles.selected : undefined} href="#">
-          RESOURCES
-        </Link>
-        {isResourceDrawerVisible && <ResourceDrawer isVisible={isResourceDrawerVisible} />}
-      </div>
       <Link id={selected == 'Gallery' ? styles.selected : undefined} href="/gallery">
         GALLERY
       </Link>
@@ -139,28 +120,18 @@ const MenuDrawer = ({
 const DeptDrawer = ({ isVisible }) => {
   return (
     <div className={`${styles.drawer} ${isVisible ? styles.isVisible : ''}`}>
-      <Link className={styles.drawerText} href="/departments/cp">
-        Competitive Programming
+      <Link className={styles.drawerText} href="/departments/aaa">
+        aaa
       </Link>
-      <Link className={styles.drawerText} href="/departments/dev-os">
-        Dev & OS
+      <Link className={styles.drawerText} href="/departments/bbb">
+        bbb
       </Link>
-      <Link className={styles.drawerText} href="/departments/ml">
-        Machine Learning
+      <Link className={styles.drawerText} href="/departments/ccc">
+        ccc
       </Link>
-      <Link className={styles.drawerText} href="/departments/cyber-security">
-        Cyber Security
+      <Link className={styles.drawerText} href="/departments/ddd">
+        ddd
       </Link>
-    </div>
-  );
-};
-const ResourceDrawer = ({ isVisible }) => {
-  return (
-    <div className={`${styles.resourcedrawer} ${isVisible ? styles.isVisible : ''}`}>
-      <Link href="/resources/cp">Competitive Programming</Link>
-      <Link href="/resources/dev-os">Dev & OS</Link>
-      <Link href="/resources/ml">Machine Learning</Link>
-      <Link href="/resources/cyber-security">Cyber Security</Link>
     </div>
   );
 };

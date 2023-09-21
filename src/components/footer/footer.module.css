@@ -16,6 +16,8 @@
 }
 .briefInfo {
   width: 20%;
+  text-align: center;
+  justify-content: center;
 }
 .map,
 .links {
@@ -26,9 +28,9 @@
   height: 250px;
   max-width: 90vw;
 }
-.briefInfo img {
+/* .briefInfo img {
   width: 200px;
-}
+} */
 .briefInfo p {
   color: gainsboro;
   line-height: 30px;

@@ -12,7 +12,7 @@
   z-index: 10;
 }
 
-@media (max-width: 599.5px) {
+@media (max-width: 849.5px) {
   .header {
     --_menu-visible: none;
     --_menuButton-visible: flex;
@@ -27,7 +27,7 @@
     top: 0%;
   }
 }
-@media (min-width: 600px) {
+@media (min-width: 850px) {
   .header {
     --_menu-visible: flex;
     --_menuButton-visible: none;
@@ -141,7 +141,7 @@
 
 #menuButton {
   display: var(--_menuButton-visible);
-  padding-left: calc(50vw - var(--_img-h));
+  padding-left: calc(20vw - var(--_img-h));
   padding-right: 4%;
 }
 
