@@ -34,7 +34,7 @@ const Footer = () => {
           </ul>
         </div> */}
         <div className={styles.links}>
-          <h2>DEVELOPERS</h2>
+          <h2>DEVELOPER'S TEAM</h2>
           <ul>
             <li>
               <Link href="/departments/aaa">Sahilsher Singh Sandhu</Link>
@@ -65,7 +65,7 @@ const Footer = () => {
           &copy; {new Date().getFullYear()} Copyright{' '}
           <span style={{ fontWeight: 600 }}>Society Synergy.</span>
         </span>
-        <span>Developed with ❤️ by Society Synergy</span>
+        <span>Developed with ❤️ by Team Society Synergy</span>
       </div>
     </footer>
   );

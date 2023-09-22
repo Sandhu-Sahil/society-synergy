@@ -2,13 +2,20 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import { CoordCard, SubCoordCard, DeptCard, EventCard, Footer, Header } from '@/components';
 import { motion } from 'framer-motion';
-// import events from '@/data/events';
-// import departments from '@/data/departments';
 import Tilt from 'react-parallax-tilt';
 import DisplayLottie from '@/components/Lottie';
 import Background from '@/components/Background';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-export default function Home({ coords, subcoords, events }) {
+export default function Home({ data }) {
+  const [maindata, setmaindata] = useState([]);
+
+  useEffect(() => {
+    setmaindata(data)
+    localStorage.setItem('jwtSandhuToken', data.message)
+  }, [data])
+
   return (
     <>
       <Head>
@@ -132,7 +139,7 @@ export default function Home({ coords, subcoords, events }) {
                 )
             )} */}
           </div>
-          <div className={styles.cardSection}>
+          <div className={styles.cardSection}> 
             {/* {coords.map((member, index) => {
               if (member.committee !== 'Overall Coordinator') {
                 return (
@@ -266,7 +273,7 @@ export default function Home({ coords, subcoords, events }) {
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <img
             alt="TeamWork"
-            src="team.png"
+            src="team2.png"
             style={{
               marginInline: '5%',
               maxWidth: '90vw',
@@ -279,4 +286,23 @@ export default function Home({ coords, subcoords, events }) {
       </div>
     </>
   );
+}
+
+// export async function getServerSideProps(context) {
+//   const cookies = new Cookies(context.req.headers.cookie)
+//   const adminToken = cookies.get('jwtToken')
+
+//   const res = await pingBackend("test")
+
+//   return {
+//     props: {
+//       testdata: ''
+//     },
+//   }
+// }
+
+export async function getServerSideProps() { 
+  let dataFromSomeAPI = await axios.get(`http://localhost:3003/api/v1/test/ping`)
+
+  return {props: {data: dataFromSomeAPI.data}}
 }
