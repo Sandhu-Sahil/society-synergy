@@ -7,14 +7,19 @@ import DisplayLottie from '@/components/Lottie';
 import Background from '@/components/Background';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
 
 export default function Home({ data }) {
   const [maindata, setmaindata] = useState([]);
 
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
+
   useEffect(() => {
     setmaindata(data)
     localStorage.setItem('jwtSandhuToken', data.message)
-  }, [data])
+    setCookie('jwtToken3', data.message, { path: '/' })
+    console.log('Cookies: ', cookies);
+  }, [data, setCookie, cookies])
 
   return (
     <>
@@ -287,19 +292,6 @@ export default function Home({ data }) {
     </>
   );
 }
-
-// export async function getServerSideProps(context) {
-//   const cookies = new Cookies(context.req.headers.cookie)
-//   const adminToken = cookies.get('jwtToken')
-
-//   const res = await pingBackend("test")
-
-//   return {
-//     props: {
-//       testdata: ''
-//     },
-//   }
-// }
 
 export async function getServerSideProps() { 
   let dataFromSomeAPI = await axios.get(`http://localhost:3003/api/v1/test/ping`)

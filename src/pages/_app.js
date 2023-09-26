@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import '@/styles/globals.css';
 import { Josefin_Sans } from 'next/font/google';
 import Loader from '@/components/Loader';
+import { CookiesProvider } from 'react-cookie';
 
 const JosefinSans = Josefin_Sans({
   style: 'normal',
@@ -40,7 +41,9 @@ export default function App({ Component, pageProps }) {
       {loading ? (
         <Loader />
       ) : (
-        <Component {...pageProps} />
+        <CookiesProvider>
+          <Component {...pageProps} />
+        </CookiesProvider>
       )}
     </main>
   );

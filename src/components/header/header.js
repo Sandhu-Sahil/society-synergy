@@ -62,6 +62,13 @@ const HeaderComp = ({ selected }) => {
         >
           CONTACT
         </Link>
+        <Link
+          style={{ height: '30px' }}
+          id={selected == 'Profile' ? styles.selected : undefined}
+          href="/profile"
+        >
+          PROFILE
+        </Link>
       </section>
       <div id={styles.menuButton} onMouseLeave={menuHandleMouseLeave}>
         <GiHamburgerMenu color="white" size={25} onClick={menuHandleMouseClick} />
@@ -112,6 +119,9 @@ const MenuDrawer = ({
       </Link>
       <Link id={selected == 'Contact' ? styles.selected : undefined} href="/contact-us">
         CONTACT
+      </Link>
+      <Link id={selected == 'Profile' ? styles.selected : undefined} href="/profile">
+        PROFILE
       </Link>
     </section>
   );

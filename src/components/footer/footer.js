@@ -37,16 +37,16 @@ const Footer = () => {
           <h2>DEVELOPER'S TEAM</h2>
           <ul>
             <li>
-              <Link href="/departments/aaa">Sahilsher Singh Sandhu</Link>
+              <Link href="https://github.com/Sandhu-Sahil">Sahilsher Singh Sandhu</Link>
             </li>
             <li>
-              <Link href="/departments/bbb">bbb</Link>
+              <Link href="https://github.com/SOURHEAD">Arnav Bhargava</Link>
             </li>
             <li>
-              <Link href="/departments/ccc">ccc</Link>
+              <Link href="#">ccc</Link>
             </li>
             <li>
-              <Link href="/departments/ddd">ddd</Link>
+              <Link href="#">ddd</Link>
             </li>
           </ul>
         </div>
