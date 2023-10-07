@@ -1,15 +1,23 @@
 import styles from '@/styles/slug.module.css';
+import Lottie from 'react-lottie';
 
 function Loader() {
   return (
+    <>  
     <div className={styles.loading}>
-      <div className={styles.opposites}>
-        <div className={`${styles.opposite} ${styles.bl}`} />
-        <div className={`${styles.opposite} ${styles.tr}`} />
-        <div className={`${styles.opposite} ${styles.br}`} />
-        <div className={`${styles.opposite} ${styles.tl}`} />
-      </div>
+        <Lottie options={{
+          loop: true,
+          autoplay: true,
+          animationData: require('../data/animationloader1.json'),
+          rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+          }
+        }}
+        height={400}
+        width={400}
+        />
     </div>
+    </>
   );
 }
 export default Loader;

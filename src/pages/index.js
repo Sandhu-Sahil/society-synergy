@@ -8,6 +8,7 @@ import Background from '@/components/Background';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
+import Lottie from 'react-lottie';
 
 export default function Home({ data }) {
   const [maindata, setmaindata] = useState([]);
@@ -55,7 +56,17 @@ export default function Home({ data }) {
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <DisplayLottie animationPath="https://assets3.lottiefiles.com/packages/lf20_mXdqmT1SH2.json" />
+            <div>
+              <Lottie options={{
+                  loop: true,
+                  autoplay: true,
+                  animationData: require('../data/lottie-home.json'),
+                  rendererSettings: {
+                    preserveAspectRatio: 'xMidYMid slice'
+                  }
+                }}
+              />
+            </div>
           </motion.div>
         </section>
         <section className={styles.section}>
