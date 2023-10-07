@@ -1,0 +1,105 @@
+.outtermain{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.outterBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  border: solid 1px #ff6a00;
+  border-radius: 20px;
+  width: 40%;
+    height: 60%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.outterBox:hover{
+    border: solid 1px blue;
+}
+
+.innerBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  padding: 5%;
+}
+
+.loginHeading {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #fff;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-family: fantasy;
+}
+
+.loginLottie{
+    width: 45%;
+    height: 45%;
+}
+
+.loginData{
+    width: 55%;
+    height: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-login{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.inputLoginForm {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 850px) {
+    .innerBox{
+        flex-direction: column;
+    }
+}
+@media screen and (max-width: 850px) {
+    .loginData{
+        width: 100%;
+        height: 100%;
+    }
+}
+@media screen and (max-width: 850px) {
+    .outterBox{
+        width: 50%;
+    }
+}
+@media screen and (max-width: 650px) {
+    .outterBox{
+        width: 70%;
+    }
+}
+@media screen and (max-width: 500px) {
+    .outterBox{
+        width: 90%;
+    }
+}

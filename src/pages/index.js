@@ -9,13 +9,19 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import Lottie from 'react-lottie';
+import { toast } from 'react-toastify';
 
+toast.configure();
 export default function Home({ data }) {
   const [maindata, setmaindata] = useState([]);
 
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
   useEffect(() => {
+    toast("Welcome to Society Synergy", {
+      psition: toast.POSITION.TOP_RIGHT,
+      autoClose: 3000,
+    });
     setmaindata(data)
     localStorage.setItem('jwtSandhuToken', data.message)
     setCookie('jwtToken3', data.message, { path: '/' })
@@ -264,7 +270,17 @@ export default function Home({ data }) {
               transition={{ duration: 2 }}
               viewport={{ once: true }}
             >
-              <DisplayLottie animationPath="https://assets1.lottiefiles.com/packages/lf20_v1yudlrx.json" />
+              <div>
+                <Lottie options={{
+                    loop: true,
+                    autoplay: true,
+                    animationData: require('../data/lottie-team.json'),
+                    rendererSettings: {
+                      preserveAspectRatio: 'xMidYMid slice'
+                    }
+                  }}
+                />
+              </div>
             </motion.div>
             <motion.p
               initial={{ opacity: 0, x: '100%' }}
