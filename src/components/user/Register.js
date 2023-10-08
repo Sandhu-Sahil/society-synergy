@@ -46,7 +46,8 @@ export default function Rregister(){
         enableReinitialize: true
     })
     const handleSubmit = async (values) => {
-        console.log(values)
+        let tempPhoneNo = values.phoneNo;
+        values.phoneNo = "+91" + values.phoneNo;
         const res = await RegisterAxios(values)
           .then((res) => {
             console.log(res)
@@ -63,9 +64,9 @@ export default function Rregister(){
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2500,
             });
+            values.phoneNo = tempPhoneNo;
           });
     }
-    console.log(formik)
     return(
         <>
         <div className={styles.outtermain}>
