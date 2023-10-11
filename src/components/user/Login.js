@@ -112,7 +112,7 @@ export default function Login(){
                             <Button variant="contained" type='submit' sx={{background:'#ff6a00', color:'black'}}><b>Submit</b></Button>
                             <br />
                         </form>
-                        <Link href='/user/forgot-password'> Forgot Password? </Link>
+                        <Link href='/user/forget-password'> Forgot Password? </Link>
                         <Link href='/user/register'> Don't have an account? </Link>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 import { Footer, Header } from "@/components";
 import Background from "@/components/Background";
-import ForgetPassword from "@/components/user/ForgetPassword";
+import Otp from "@/components/user/Otp";
 import Head from "next/head";
 
 export default function Profile() {
@@ -15,7 +15,7 @@ export default function Profile() {
             </Head>
             <Header selected={'Profile'}/>
             <Background />
-            <ForgetPassword />
+            <Otp />
             <Footer />
         </>
     )
