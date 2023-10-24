@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import Lottie from 'react-lottie';
 import { toast } from 'react-toastify';
+import url from '@/services/index'
 
 toast.configure();
 export default function Home({ data }) {
@@ -321,7 +322,7 @@ export default function Home({ data }) {
 }
 
 export async function getServerSideProps() { 
-  let dataFromSomeAPI = await axios.get(`http://localhost:3003/api/v1/test/ping`)
+  let dataFromSomeAPI = await axios.get(`${url}/api/v1/test/ping`)
 
   return {props: {data: dataFromSomeAPI.data}}
 }
