@@ -1,7 +1,7 @@
 import axios from 'axios';
 import url from '../index'
 
-export default async function ForgetPasswordApi(data, token) {
+export default async function ChangePasswordApi(data, token) {
     const config = {
         headers: {
           Authorization: "Bearer " + token,
