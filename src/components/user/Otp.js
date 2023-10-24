@@ -8,6 +8,7 @@ import styles from './user.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
+import OtpApi from '@/services/userService/Otp';
 
 toast.configure();
 export default function ForgetPassword(){
@@ -29,11 +30,20 @@ export default function ForgetPassword(){
         enableReinitialize: true
     })
     const handleSubmit = async (values) => {    
-        toast.success('OTP verified, login successful', {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 2500,
-        });  
-        router.push('/profile');  
+        const res = await OtpApi(values, cookies.jwtSandhuToken)
+          .then((res) => {
+            toast.success(res.data.message, {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2500,
+            });
+            router.push('/profile');
+          })
+          .catch((error) => {
+            toast.error(error.response?.data?.error, {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2500,
+            });
+          });    
     }
     return(
         <>

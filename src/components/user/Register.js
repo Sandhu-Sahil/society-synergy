@@ -11,10 +11,13 @@ import Lottie from 'react-lottie';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import ForgetPassword from '@/services/userService/ForgetPassword';
 
+toast.configure();
 export default function Rregister(){
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
     const router = useRouter();
+    console.log(cookies)
 
     const [initialValues, setInitialValues] = useState({
         email: '',
@@ -52,12 +55,12 @@ export default function Rregister(){
           .then((res) => {
             console.log(res)
             const token = res.data.data.token
-            setCookie('jwtSandhToken', token, { path: '/' });
+            setCookie('jwtSandhuToken', token, { path: '/' });
             toast.success(res.data.message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2500,
             });
-            router.push('/');
+            handleSubmit2(values.email, token)
           })
           .catch((error) => {
             toast.error(error.response?.data?.error, {
@@ -67,6 +70,24 @@ export default function Rregister(){
             values.phoneNo = tempPhoneNo;
           });
     }
+    const handleSubmit2 = async (email, token) => {
+        const res = await ForgetPassword(email, token)
+          .then((res) => {
+            toast.success(res.data.message, {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2500,
+            });
+            router.push('/user/otp');
+          })
+          .catch((error) => {
+            toast.error(error.response?.data?.error, {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2500,
+            });
+            router.push('/');
+          });
+    }
+
     return(
         <>
         <div className={styles.outtermain}>
