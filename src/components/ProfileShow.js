@@ -8,7 +8,7 @@ export default function ProfileShow() {
     return(
     <>
         {cookies.jwtSandhuToken ? (
-            <UserProfile />
+            <UserProfile/>
         ) : (
             <Login />
         )}

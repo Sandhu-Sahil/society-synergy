@@ -8,7 +8,7 @@ import styles from './user.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
-import ForgetPasswordApi from '@/services/userService/ForgetPassword';
+import OtpSendByEmailApi from '@/services/userService/OtpByEmail';
 
 toast.configure();
 export default function ForgetPassword(){
@@ -30,12 +30,13 @@ export default function ForgetPassword(){
         enableReinitialize: true
     })
     const handleSubmit = async (values) => {
-        const res = await ForgetPasswordApi(values, cookies.user.jwtSandhuToken)
+        const res = await OtpSendByEmailApi(values)
           .then((res) => {
             toast.success(res.data.message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2500,
             });
+            setCookie('SandhuOtpEmail', values.email, { path: '/' });
             router.push('/user/otp');
           })
           .catch((error) => {

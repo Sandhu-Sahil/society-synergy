@@ -11,13 +11,12 @@ import Lottie from 'react-lottie';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import ForgetPassword from '@/services/userService/ForgetPassword';
+import OtpSend from '@/services/userService/OtpSend';
 
 toast.configure();
 export default function Rregister(){
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
     const router = useRouter();
-    console.log(cookies)
 
     const [initialValues, setInitialValues] = useState({
         email: '',
@@ -53,7 +52,6 @@ export default function Rregister(){
         values.phoneNo = "+91" + values.phoneNo;
         const res = await RegisterAxios(values)
           .then((res) => {
-            console.log(res)
             const token = res.data.data.token
             setCookie('jwtSandhuToken', token, { path: '/' });
             toast.success(res.data.message, {
@@ -71,7 +69,7 @@ export default function Rregister(){
           });
     }
     const handleSubmit2 = async (email, token) => {
-        const res = await ForgetPassword(email, token)
+        const res = await OtpSend(token)
           .then((res) => {
             toast.success(res.data.message, {
                 position: toast.POSITION.TOP_RIGHT,

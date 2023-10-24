@@ -8,6 +8,6 @@ export default async function ForgetPasswordApi(data, token) {
           "Content-Type": "application/json",
         },
       };
-    const dataFromSomeAPI = await axios.post(`${url}/api/v2/email/otpsend`, data, config)
+    const dataFromSomeAPI = await axios.post(`${url}/api/v2/user/changePassword`, data, config)
     return (dataFromSomeAPI);
 }

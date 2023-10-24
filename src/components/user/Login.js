@@ -40,12 +40,12 @@ export default function Login(){
         const res = await LoginAxios(values)
           .then((res) => {
             const token = res.data.data.token
-            setCookie('jwtSandhToken', token, { path: '/' });
+            setCookie('jwtSandhuToken', token, { path: '/' });
             toast.success(res.data.message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2500,
             });
-            router.push('/');
+            router.push('/profile');
           })
           .catch((error) => {
             toast.error(error.response?.data?.error, {

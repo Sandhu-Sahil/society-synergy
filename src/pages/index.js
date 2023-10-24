@@ -19,15 +19,8 @@ export default function Home({ data }) {
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
   useEffect(() => {
-    toast("Welcome to Society Synergy", {
-      psition: toast.POSITION.TOP_RIGHT,
-      autoClose: 3000,
-    });
     setmaindata(data)
-    localStorage.setItem('jwtSandhuToken', data.message)
-    setCookie('jwtToken3', data.message, { path: '/' })
-    console.log('Cookies: ', cookies);
-  }, [data, setCookie, cookies])
+  }, [data])
 
   return (
     <>

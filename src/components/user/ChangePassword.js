@@ -8,7 +8,7 @@ import styles from './user.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
-import OtpApi from '@/services/userService/Otp';
+import ChangepasswordApi from '@/services/userService/Changepassword';
 
 toast.configure();
 export default function Otp(){
@@ -16,11 +16,17 @@ export default function Otp(){
     const router = useRouter();
 
     const [initialValues, setInitialValues] = useState({
-        email: cookies.SandhuOtpEmail,
         otp: '',
+        password: '',
+        cpassword: '',
     })
     const validationSchema = Yup.object().shape({
         otp: Yup.string().required('required*').length(8, 'OTP length should be 8'),
+        password: Yup.string().required("required*").matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+          ),
+        cpassword: Yup.string().required("Required*").oneOf([Yup.ref('password'), null], 'Passwords must match'),
     })
     const formik = useFormik({
         initialValues,
@@ -31,13 +37,12 @@ export default function Otp(){
         enableReinitialize: true
     })
     const handleSubmit = async (values) => {    
-        const res = await OtpApi(values, cookies.jwtSandhuToken)
+        const res = await ChangepasswordApi(values, cookies.jwtSandhuToken)
           .then((res) => {
             toast.success(res.data.message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2500,
             });
-            setCookie('jwtSandhuToken', res.data.data.token, { path: '/' })
             router.push('/profile');
           })
           .catch((error) => {
@@ -52,7 +57,7 @@ export default function Otp(){
         <div className={styles.outtermain}>
             <div className={styles.outterBox}>
                 <div className={styles.loginHeading}>
-                    <h1 style={{textAlign:'center'}}>Enter OTP</h1>
+                    <h1 style={{textAlign:'center'}}>Update Password</h1>
                     <p style={{textAlign:'center'}}>Check your email for the OTP</p>
                 </div>
                 <div className={styles.innerBox}>
@@ -73,8 +78,40 @@ export default function Otp(){
                                 sx={{label: {color: 'white'}, input:{borderBottom: '1px solid white', color:'white'}}}
                             />
                             <br />
+                            <TextField 
+                                required 
+                                id="standard-basic" 
+                                label="New Password" 
+                                name='password' 
+                                variant="standard"
+                                type='password'
+                                onChange={formik.handleChange} 
+                                onBlur={formik.handleBlur} 
+                                value={formik.values.password} 
+                                helperText={formik.errors.password && formik.touched.password ? formik.errors.password : false}
+                                error={formik.errors.password && formik.touched.password ? true : false}
+                                className='login-input'
+                                sx={{label: {color: 'white'}, input:{borderBottom: '1px solid white', color:'white'}}}
+                            />
                             <br />
-                            <Button variant="contained" type='submit' sx={{background:'#ff6a00', color:'black'}}><b>Verify</b></Button>
+                            <TextField 
+                                required 
+                                id="standard-basic" 
+                                label="Confirm Password" 
+                                name='cpassword' 
+                                variant="standard"
+                                type='password'
+                                onChange={formik.handleChange} 
+                                onBlur={formik.handleBlur} 
+                                value={formik.values.cpassword} 
+                                helperText={formik.errors.cpassword && formik.touched.cpassword ? formik.errors.cpassword : false}
+                                error={formik.errors.cpassword && formik.touched.cpassword ? true : false}
+                                className='login-input'
+                                sx={{label: {color: 'white'}, input:{borderBottom: '1px solid white', color:'white'}}}
+                            />
+                            <br />
+                            <br />
+                            <Button variant="contained" type='submit' sx={{background:'#ff6a00', color:'black'}}><b>Update</b></Button>
                             <br />
                         </form>
                     </div>

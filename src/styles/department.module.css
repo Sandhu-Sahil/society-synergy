@@ -12,10 +12,10 @@
 }
 
 .aboutDept {
-  height: 100vh;
+  height: 50vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 }
 
@@ -24,6 +24,7 @@
   justify-content: space-between;
   align-items: center;
   width: 70vw;
+  margin: 10px 0 10px 0;
 }
 .deptTitle h1 {
   color: #ff6559;
@@ -109,9 +110,46 @@
   text-align: left;
 }
 
+.butoons {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: flex-start;
+  margin: 10px 0 10px 0;
+}
+.btn{
+  background-color: transparent;
+  border: 1px solid #ff6559;
+  border-radius: 5px;
+  color: #ff6559;
+  cursor: pointer;
+  font-family: Josefin Sans;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 5px 5px;
+  margin: 0 10px 0 10px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #ff6559;
+  color: white;
+}
+
 @media screen and (max-width: 768px) {
+  .butoons {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn {
+    margin: 5px 0 5px 0;
+  }
   .aboutDept {
-    height: 100%;
+    height: 50vh;
   }
   .deptTitle {
     flex-direction: column-reverse;
@@ -120,13 +158,13 @@
     margin-top: 11px;
   }
   .deptTitle > div > h1 {
-    font-size: 1.1rem;
+    font-size: 3rem;
     white-space: nowrap;
     margin-top: 10px;
     text-align: center;
   }
   .deptTitle > div > h4 {
-    font-size: 1rem;
+    font-size: 1.2rem;
     text-align: center;
   }
   .deptTitle img {
