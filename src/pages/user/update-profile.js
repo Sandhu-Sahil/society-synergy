@@ -1,5 +1,6 @@
 import { Footer, Header } from "@/components";
 import Background from "@/components/Background";
+import UpdateProfile from "@/components/user/UserProfileUpdate";
 import Head from "next/head";
 
 export default function Profile() {
@@ -14,6 +15,7 @@ export default function Profile() {
             </Head>
             <Header selected={'Profile'}/>
             <Background />
+            <UpdateProfile />
             <Footer />
         </>
     )

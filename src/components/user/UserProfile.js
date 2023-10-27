@@ -37,6 +37,7 @@ export default function UserProfile(){
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2500,
             });
+            setCookie('SandhuOtpEmail', user.email, { path: '/' });
             router.push('/user/otp');
           })
           .catch((error) => {

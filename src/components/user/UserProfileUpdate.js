@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import { ToastContainer, toast } from 'react-toastify';
 import { useFormik } from "formik";
@@ -12,31 +12,47 @@ import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import OtpSend from '@/services/userService/OtpSend';
+import GetUser from '@/services/userService/GetUser';
+import UpdateUser from '@/services/userService/UpdateUser';
 
 toast.configure();
-export default function Rregister(){
+export default function UpdateProfile(){
+    const [user, setUser] = useState(null);
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
     const router = useRouter();
 
+    useEffect(() => {
+        async function fetchdata() {
+            let dataFromSomeAPI = await GetUser(0, cookies.jwtSandhuToken);
+            setUser(dataFromSomeAPI.data.data);
+            formik.setFieldValue('otp', '');
+            formik.setFieldValue('firstName', dataFromSomeAPI.data.data.firstName);
+            formik.setFieldValue('lastName', dataFromSomeAPI.data.data.lastName);
+            formik.setFieldValue('userName', dataFromSomeAPI.data.data.userName);
+            // remove +91 from phoneNo
+            let tempPhoneNo = dataFromSomeAPI.data.data.phoneNo;
+            tempPhoneNo = tempPhoneNo.slice(3);
+            formik.setFieldValue('phoneNo', tempPhoneNo);
+            formik.setFieldValue('email', dataFromSomeAPI.data.data.email);
+        }
+        if (cookies.jwtSandhuToken){
+            fetchdata();
+        }
+    }, [cookies])
+
     const [initialValues, setInitialValues] = useState({
-        email: '',
-        password: '',
-        cpassword: '',
-        firstName: '',
-        lastName: '',
-        userName: '',
-        phoneNo: ''
+        otp:'waiting...',
+        firstName: 'waiting...',
+        lastName: 'waiting...',
+        userName: 'waiting...',
+        phoneNo: 'waiting...',
+        email: 'waiting...',
     })
     const validationSchema = Yup.object().shape({
+        otp: Yup.string().required('required*').length(8, 'OTP length should be 8'),
         firstName: Yup.string().required("Required*").matches(/^([a-zA-Z]+\s)*[a-zA-Z]+$/, "Please enter a valid first name"),
         lastName: Yup.string().required("Required*").matches(/^([a-zA-Z]+\s)*[a-zA-Z]+$/, "Please enter a valid last name"),
-        userName: Yup.string().required("Required*").matches(/^[a-zA-Z0-9_-]{3,20}$/, "Please enter a valid username"),
-        email: Yup.string().required('required*').email("Please enter a valid email"),
-        password: Yup.string().required("required*").matches(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-          ),
-        cpassword: Yup.string().required("Required*").oneOf([Yup.ref('password'), null], 'Passwords must match'),
+        userName: Yup.string().required("Required*").matches(/^[a-zA-Z0-9_-]{3,20}$/, "Please enter a valid username"),       
         phoneNo: Yup.string().required("Required*").matches(/^[0-9]{10}$/, "Please enter a valid phone number"),
     })
     const formik = useFormik({
@@ -50,15 +66,13 @@ export default function Rregister(){
     const handleSubmit = async (values) => {
         let tempPhoneNo = values.phoneNo;
         values.phoneNo = "+91" + values.phoneNo;
-        const res = await RegisterAxios(values)
+        const res = await UpdateUser(values, cookies.jwtSandhuToken)
           .then((res) => {
-            const token = res.data.data.token
-            setCookie('jwtSandhuToken', token, { path: '/' });
             toast.success(res.data.message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2500,
             });
-            handleSubmit2(values.email, token)
+            router.push('/profile');
           })
           .catch((error) => {
             toast.error(error.response?.data?.error, {
@@ -68,47 +82,33 @@ export default function Rregister(){
             formik.setFieldValue('phoneNo', tempPhoneNo)
           });
     }
-    const handleSubmit2 = async (email, token) => {
-        const res = await OtpSend(token)
-          .then((res) => {
-            toast.success(res.data.message, {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 2500,
-            });
-            router.push('/user/otp');
-          })
-          .catch((error) => {
-            toast.error(error.response?.data?.error, {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 2500,
-            });
-            router.push('/');
-          });
-    }
 
     return(
         <>
         <div className={styles.outtermain}>
             <div className={styles.outterBox}>
                 <div className={styles.loginHeading}>
-                    <h1 style={{textAlign:'center'}}>Join Aboard with us!</h1>
+                    <h1 style={{textAlign:'center'}}>Let's update yourself!</h1>
+                    <p style={{textAlign:'center'}}>Check your email for the OTP</p>
                 </div>
                 <div className={styles.innerBox}>
-                    <div className={styles.loginLottie}>
-                        <div>
-                        <Lottie options={{
-                            loop: true,
-                            autoplay: true,
-                            animationData: require('../../data/animationRegister.json'),
-                            rendererSettings: {
-                                preserveAspectRatio: 'xMidYMid slice'
-                            }
-                            }}
-                        />
-                        </div>
-                    </div>
                     <div className={styles.loginData}>
                         <form autoComplete="off" onSubmit={formik.handleSubmit} className={styles.inputLoginForm}>
+                            <TextField                     
+                                required 
+                                id="standard-basic" 
+                                label="OTP" 
+                                name='otp' 
+                                variant="standard"
+                                onChange={formik.handleChange} 
+                                onBlur={formik.handleBlur} 
+                                value={formik.values.otp} 
+                                helperText={formik.errors.otp && formik.touched.otp ? formik.errors.otp : false}
+                                error={formik.errors.otp && formik.touched.otp ? true : false}
+                                className='login-input'
+                                sx={{label: {color: 'white'}, input:{borderBottom: '1px solid white', color:'white'}}}
+                            />
+                            <br/>
                             <TextField                     
                                 required 
                                 id="standard-basic" 
@@ -170,57 +170,19 @@ export default function Rregister(){
                             />
                             <br />
                             <TextField                     
-                                required 
                                 id="standard-basic" 
-                                label="Email" 
+                                label="Email (could not be changed)" 
                                 name='email' 
                                 variant="standard"
-                                onChange={formik.handleChange} 
-                                onBlur={formik.handleBlur} 
                                 value={formik.values.email} 
-                                helperText={formik.errors.email && formik.touched.email ? formik.errors.email : false}
-                                error={formik.errors.email && formik.touched.email ? true : false}
-                                className='login-input'
-                                sx={{label: {color: 'white'}, input:{borderBottom: '1px solid white', color:'white'}}}
-                            />
-                            <br />
-                            <TextField 
-                                required 
-                                id="standard-basic" 
-                                label="Password" 
-                                name='password' 
-                                variant="standard"
-                                type='password'
-                                onChange={formik.handleChange} 
-                                onBlur={formik.handleBlur} 
-                                value={formik.values.password} 
-                                helperText={formik.errors.password && formik.touched.password ? formik.errors.password : false}
-                                error={formik.errors.password && formik.touched.password ? true : false}
-                                className='login-input'
-                                sx={{label: {color: 'white'}, input:{borderBottom: '1px solid white', color:'white'}}}
-                            />
-                            <br />
-                            <TextField 
-                                required 
-                                id="standard-basic" 
-                                label="Confirm Password" 
-                                name='cpassword' 
-                                variant="standard"
-                                type='password'
-                                onChange={formik.handleChange} 
-                                onBlur={formik.handleBlur} 
-                                value={formik.values.cpassword} 
-                                helperText={formik.errors.cpassword && formik.touched.cpassword ? formik.errors.cpassword : false}
-                                error={formik.errors.cpassword && formik.touched.cpassword ? true : false}
                                 className='login-input'
                                 sx={{label: {color: 'white'}, input:{borderBottom: '1px solid white', color:'white'}}}
                             />
                             <br />
                             <br />
-                            <Button variant="contained" type='submit' sx={{background:'#ff6a00', color:'black'}}><b>Register</b></Button>
+                            <Button variant="contained" type='submit' sx={{background:'#ff6a00', color:'black'}}><b>Update</b></Button>
                             <br />
                         </form>
-                        <Link href='/profile'> Already have an account? </Link>
                     </div>
                 </div>
             </div>

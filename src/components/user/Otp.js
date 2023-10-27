@@ -31,7 +31,7 @@ export default function Otp(){
         enableReinitialize: true
     })
     const handleSubmit = async (values) => {    
-        const res = await OtpApi(values, cookies.jwtSandhuToken)
+        const res = await OtpApi(values)
           .then((res) => {
             toast.success(res.data.message, {
                 position: toast.POSITION.TOP_RIGHT,
