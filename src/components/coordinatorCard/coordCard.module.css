@@ -29,12 +29,13 @@
 }
 
 .coordName {
-  height: 35px;
+  height: 40px;
   text-align: center;
   font-size: 1.2rem;
   font-family: Josefin Sans;
   font-weight: 400;
   width: max-content;
+  margin: 10px;
 }
 
 .coordCard p,
@@ -46,7 +47,7 @@
   text-align: center;
   line-height: 15px;
   margin-bottom: 10%;
-  padding-block: 3px;
+  padding-block: 6px;
 }
 
 .subCoordCard p {
@@ -58,6 +59,7 @@
   align-self: center;
   width: 100%;
   justify-content: space-around;
+  padding: 10px;
 }
 
 .coordIcon img {

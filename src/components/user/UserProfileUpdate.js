@@ -21,20 +21,21 @@ export default function UpdateProfile(){
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
     const router = useRouter();
 
+    async function fetchdata() {
+        let dataFromSomeAPI = await GetUser(0, cookies.jwtSandhuToken);
+        setUser(dataFromSomeAPI.data.data);
+        formik.setFieldValue('otp', '');
+        formik.setFieldValue('firstName', dataFromSomeAPI.data.data.firstName);
+        formik.setFieldValue('lastName', dataFromSomeAPI.data.data.lastName);
+        formik.setFieldValue('userName', dataFromSomeAPI.data.data.userName);
+        // remove +91 from phoneNo
+        let tempPhoneNo = dataFromSomeAPI.data.data.phoneNo;
+        tempPhoneNo = tempPhoneNo.slice(3);
+        formik.setFieldValue('phoneNo', tempPhoneNo);
+        formik.setFieldValue('email', dataFromSomeAPI.data.data.email);
+    }
+    
     useEffect(() => {
-        async function fetchdata() {
-            let dataFromSomeAPI = await GetUser(0, cookies.jwtSandhuToken);
-            setUser(dataFromSomeAPI.data.data);
-            formik.setFieldValue('otp', '');
-            formik.setFieldValue('firstName', dataFromSomeAPI.data.data.firstName);
-            formik.setFieldValue('lastName', dataFromSomeAPI.data.data.lastName);
-            formik.setFieldValue('userName', dataFromSomeAPI.data.data.userName);
-            // remove +91 from phoneNo
-            let tempPhoneNo = dataFromSomeAPI.data.data.phoneNo;
-            tempPhoneNo = tempPhoneNo.slice(3);
-            formik.setFieldValue('phoneNo', tempPhoneNo);
-            formik.setFieldValue('email', dataFromSomeAPI.data.data.email);
-        }
         if (cookies.jwtSandhuToken){
             fetchdata();
         }

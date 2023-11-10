@@ -42,7 +42,7 @@ const Footer = () => {
               <Link href="https://github.com/SOURHEAD">Arnav Bhargava</Link>
             </li>
             <li>
-              <Link href="#">Jatin Poonia</Link>
+              <Link href="https://github.com/pooniajatin">Jatin Poonia</Link>
             </li>
             <li>
               <Link href="#">Aryan Kulshrestha</Link>

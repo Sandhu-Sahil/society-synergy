@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import styles from './header.module.css';
 import Link from 'next/link';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import GetHome from '@/services/home/Home';
 
 const HeaderComp = ({ selected }) => {
   const [isDrawerVisible, setDrawerVisibility] = useState(false);
   const [isResourceDrawerVisible, setResourceDrawerVisibility] = useState(false);
   const [isMenuVisible, setMenuVisibility] = useState(false);
+  const [departments, setdepartments] = useState([]);
 
   const drawerHandleMouse = () => {
     setDrawerVisibility((current) => !current);
@@ -23,6 +25,15 @@ const HeaderComp = ({ selected }) => {
     setDrawerVisibility(false);
     setResourceDrawerVisibility(false);
   };
+
+  async function fetchData() {
+    const res = await GetHome();
+    setdepartments(res.data.clubs);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -46,7 +57,7 @@ const HeaderComp = ({ selected }) => {
           <Link id={selected == 'Departments' ? styles.selected : undefined} href="#">
             DEPARTMENTS
           </Link>
-          {isDrawerVisible && <DeptDrawer isVisible={isDrawerVisible} />}
+          {isDrawerVisible && <DeptDrawer isVisible={isDrawerVisible} departments={departments} />}
         </div>
         <Link
           style={{ height: '30px' }}
@@ -79,6 +90,7 @@ const HeaderComp = ({ selected }) => {
             drawerHandleMouse={drawerHandleMouse}
             resourceDrawerHandleMouse={resourceDrawerHandleMouse}
             isResourceDrawerVisible={isResourceDrawerVisible}
+            departments={departments}
           />
         )}
       </div>
@@ -92,7 +104,8 @@ const MenuDrawer = ({
   isDrawerVisible,
   drawerHandleMouse,
   resourceDrawerHandleMouse,
-  isResourceDrawerVisible
+  isResourceDrawerVisible,
+  departments
 }) => {
   return (
     <section id={styles.menuDrawerVisible}>
@@ -112,7 +125,7 @@ const MenuDrawer = ({
         <Link id={selected == 'Departments' ? styles.selected : undefined} href="#">
           DEPARTMENTS
         </Link>
-        {isDrawerVisible && <DeptDrawer isVisible={isDrawerVisible} />}
+        {isDrawerVisible && <DeptDrawer isVisible={isDrawerVisible} departments={departments} />}
       </div>
       <Link id={selected == 'Gallery' ? styles.selected : undefined} href="/gallery">
         GALLERY
@@ -127,21 +140,17 @@ const MenuDrawer = ({
   );
 };
 
-const DeptDrawer = ({ isVisible }) => {
+const DeptDrawer = ({ isVisible, departments }) => {
   return (
     <div className={`${styles.drawer} ${isVisible ? styles.isVisible : ''}`}>
-      <Link className={styles.drawerText} href="/departments/aaa">
-        aaa
-      </Link>
-      <Link className={styles.drawerText} href="/departments/bbb">
-        bbb
-      </Link>
-      <Link className={styles.drawerText} href="/departments/ccc">
-        ccc
-      </Link>
-      <Link className={styles.drawerText} href="/departments/ddd">
-        ddd
-      </Link>
+      {
+        departments.map((dept) => (
+          <Link className={styles.drawerText} href={`/department/${dept?._id}`}>
+            {dept.name}
+          </Link>
+        ))
+      }
+      
     </div>
   );
 };

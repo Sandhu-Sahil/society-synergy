@@ -11,16 +11,25 @@ import { useCookies } from 'react-cookie';
 import Lottie from 'react-lottie';
 import { toast } from 'react-toastify';
 import url from '@/services/index'
+import { useRouter } from 'next/router';
+import GetHome from '@/services/home/Home'
 
 toast.configure();
 export default function Home({ data }) {
-  const [maindata, setmaindata] = useState([]);
+  const [maindata, setmaindata] = useState(data);
+  const [bgColor, setbgColor] = useState(["#FF6559","#0091BD","#FFAC2A","#ff80ab"]);
+  const [departments, setdepartments] = useState([]);
 
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
+  async function fetchData() {
+    const res = await GetHome();
+    setdepartments(res.data.clubs);
+  }
+
   useEffect(() => {
-    setmaindata(data)
-  }, [data])
+    fetchData();
+  }, [])
 
   return (
     <>
@@ -100,10 +109,10 @@ export default function Home({ data }) {
         <section className={styles.section}>
           <h2 className={styles.sectionHeading}>Our Departments</h2>
           <div className={styles.cardSection}>
-            {/* {departments.map((dept, index) => (
+            {departments.map((dept, index) => (
               <motion.div
                 className={styles.card}
-                key={dept.deptName}
+                key={dept?.name}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
@@ -114,145 +123,15 @@ export default function Home({ data }) {
                 }}
               >
                 <DeptCard
-                  deptName={dept.deptName}
-                  deptImage={dept.deptImage}
-                  deptDesc={dept.deptDesc}
-                  deptLink={dept.deptLink}
-                  bgColor={dept.bgColor}
+                  deptName={dept?.name}
+                  deptImage={dept?.logoUrl}
+                  deptDesc={dept?.description.slice(0, 200) + '...'}
+                  deptLink={"/department/"+dept?._id}
+                  bgColor={bgColor[index % 4]}
                 />
               </motion.div>
-            ))} */}
+            ))}
           </div>
-        </section>
-        <section className={styles.section} style={{ width: '100%' }}>
-          <h2 className={styles.sectionHeading}>Our Team</h2>
-          <h3>Coordinators</h3>
-          <div className={styles.cardSection} style={{ justifyContent: 'center' }}>
-            {/* {coords.map(
-              (member, index) =>
-                member.committee === 'Overall Coordinator' && (
-                  <motion.div
-                    key={member.name}
-                    className={styles.card}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    transition={{ duration: 1, delay: index * 0.2 }}
-                    variants={{
-                      visible: { opacity: 1, y: 0 },
-                      hidden: { opacity: 0, y: 20 }
-                    }}
-                  >
-                    <CoordCard
-                      coordName={member.name}
-                      coordImage={`https://drive.google.com/uc?export=view&id=${member.image}`}
-                      coordCommittee={member.committee}
-                      coordLinkedIn={member.linkedin}
-                      coordGitHub={member.github}
-                      coordCFHandle={member.cfhandle}
-                    />
-                  </motion.div>
-                )
-            )} */}
-          </div>
-          <div className={styles.cardSection}> 
-            {/* {coords.map((member, index) => {
-              if (member.committee !== 'Overall Coordinator') {
-                return (
-                  <motion.div
-                    key={member.name}
-                    className={styles.card}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    transition={{ duration: 1, delay: index * 0.2 }}
-                    variants={{
-                      visible: { opacity: 1, y: 0 },
-                      hidden: { opacity: 0, y: 20 }
-                    }}
-                  >
-                    {member.committee !== 'Overall Coordinator' && (
-                      <CoordCard
-                        coordName={member.name}
-                        coordImage={`https://drive.google.com/uc?export=view&id=${member.image}`}
-                        coordCommittee={member.committee}
-                        coordLinkedIn={member.linkedin}
-                        coordGitHub={member.github}
-						coordCFHandle={member.cfhandle}
-                      />
-                    )}
-                  </motion.div>
-                );
-              }
-            })} */}
-          </div>
-          <h3>Sub-Coordinators</h3>
-          {/* {!(subcoords.length > 0) && (
-            <div className={styles.cardSection}>
-              <p style={{ textAlign: 'center', width: '100%' }}>
-                Sub-Coordinator details will be updated soon.
-              </p>
-            </div>
-          )} */}
-          {/* {subcoords.length > 0 && (
-            <div className={styles.cardSection}>
-              <div className={styles.committee}>
-                <p>Competitive Programming</p>
-
-                {subcoords.map((member) => {
-                  if (member.committee === 'CP') {
-                    return (
-                      <SubCoordCard
-                        key={member.linkedin}
-                        coordName={member.name}
-                        coordLinkedIn={member.linkedin}
-                      />
-                    );
-                  }
-                })}
-              </div>
-              <div className={styles.committee}>
-                <p>Development & Open Source</p>
-
-                {subcoords.map((member) => {
-                  if (member.committee === 'Dev&OS') {
-                    return (
-                      <SubCoordCard
-                        key={member.linkedin}
-                        coordName={member.name}
-                        coordLinkedIn={member.linkedin}
-                      />
-                    );
-                  }
-                })}
-              </div>
-              <div className={styles.committee}>
-                <p>Machine Learning</p>
-
-                {subcoords.map((member) => {
-                  if (member.committee === 'ML') {
-                    return (
-                      <SubCoordCard
-                        key={member.linkedin}
-                        coordName={member.name}
-                        coordLinkedIn={member.linkedin}
-                      />
-                    );
-                  }
-                })}
-              </div> */}
-              {/* 
-            <div className={styles.committee}>
-            <p>Cyber Security</p>
-            {subcoords.map((member) => {
-              if (member.committee === 'CyberSec') {
-                return (<SubCoordCard key={member.linkedin} coordName={member.name} coordLinkedIn={member.linkedin}/>)
-              }
-            })}
-          </div> */}
-            {/* </div>
-          )}
-          ; */}
         </section>
         <section className={styles.aboutSection}>
           <h2>About us</h2>

@@ -15,15 +15,16 @@ export default function UserProfile(){
     const [events, setEvents] = useState([]);
     const router = useRouter();
 
+    async function fetchdata() {
+        let dataFromSomeAPI = await GetUser(0, cookies.jwtSandhuToken);
+        setUser(dataFromSomeAPI.data.data);
+    }
+    async function fetchdata2() {
+        // let dataFromSomeAPI = await GetEvents();
+        // setEvents(dataFromSomeAPI.data.data);
+    }
+    
     useEffect(() => {
-        async function fetchdata() {
-            let dataFromSomeAPI = await GetUser(0, cookies.jwtSandhuToken);
-            setUser(dataFromSomeAPI.data.data);
-        }
-        async function fetchdata2() {
-            // let dataFromSomeAPI = await GetEvents();
-            // setEvents(dataFromSomeAPI.data.data);
-        }
         if (cookies.jwtSandhuToken){
             fetchdata();
             fetchdata2();
@@ -58,7 +59,6 @@ export default function UserProfile(){
             router.push('/user/change-password');
           })
           .catch((error) => {
-            console.log(error);
             toast.error(error.response?.data?.error, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2500,
