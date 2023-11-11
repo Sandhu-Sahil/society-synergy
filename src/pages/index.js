@@ -22,12 +22,12 @@ export default function Home({ data }) {
 
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
-  async function fetchData() {
-    const res = await GetHome();
-    setdepartments(res.data.clubs);
-  }
-
   useEffect(() => {
+    async function fetchData() {
+      const res = await GetHome();
+      setdepartments(res.data.clubs);
+    }
+    
     fetchData();
   }, [])
 

@@ -26,12 +26,12 @@ const HeaderComp = ({ selected }) => {
     setResourceDrawerVisibility(false);
   };
 
-  async function fetchData() {
-    const res = await GetHome();
-    setdepartments(res.data.clubs);
-  }
-
   useEffect(() => {
+    async function fetchData() {
+      const res = await GetHome();
+      setdepartments(res.data.clubs);
+    }
+    
     fetchData();
   }, []);
 
