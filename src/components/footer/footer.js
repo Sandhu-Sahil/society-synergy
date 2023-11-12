@@ -45,7 +45,7 @@ const Footer = () => {
               <Link href="https://github.com/pooniajatin">Jatin Poonia</Link>
             </li>
             <li>
-              <Link href="#">Aryan Kulshrestha</Link>
+              <Link href="https://github.com/aryankul15">Aryan Kulshrestha</Link>
             </li>
           </ul>
         </div>

@@ -11,26 +11,34 @@ export default function ContactUs() {
         {
             name: 'Sahilsher Singh',
             committee: 'Technical Coordinator',
-            linkedin: 'https://www.linkedin.com/in/',
+            linkedin: 'https://www.linkedin.com/in/sahilsher-singh/',
             github: 'https://github.com/Sandhu-Sahil',
+            instagram: 'https://www.instagram.com/sandhu._.sahil_/',
+            mail: 'mailto:sandhu.sahil2002@gmail.com',
         },
         {
             name: 'Arnav Bharghav',
             committee: 'Integration Coordinator',
             linkedin: 'https://www.linkedin.com/in/',
             github: 'https://github.com/SOURHEAD',
+            instagram:'',
+            mail:'mailto:iisourhead23ii@gmail.com',
         },
         {
             name: 'Aryan kulshreshtha',
             committee: 'PR Coordinator',
-            linkedin: 'https://www.linkedin.com/in/',
-            github: '',
+            linkedin: 'https://www.linkedin.com/in/aryan-kulshrestha-993248221',
+            github: 'https://github.com/aryankul15',
+            instagram:'',
+            mail:'',
         },
         {
             name: 'Jatin Poonia',
             committee: 'Content Coordinator',
-            linkedin: '',
+            linkedin: 'https://www.linkedin.com/in/pooniajatin',
             github:'https://github.com/pooniajatin',
+            instagram:'https://instagram.com/chaudhary_jatin_poonia',
+            mail:'mailto:pooniajatin007@gmail.com',
         }
     ];
 
@@ -68,6 +76,8 @@ export default function ContactUs() {
                             coordCommittee={member.committee}
                             coordLinkedIn={member.linkedin}
                             coordGitHub={member.github}
+                            coordInsta={member.instagram}
+                            coordMail={member.mail}
                             />
                         </motion.div>
                         )

@@ -1,26 +1,45 @@
 import React from 'react';
 import styles from './coordCard.module.css';
 import Image from 'next/image';
-import { BsGithub, BsLinkedin } from 'react-icons/bs';
+import { BsGithub, BsLinkedin, BsMailbox2, BsInstagram } from 'react-icons/bs';
 
-const CoordCard = ({ coordName, coordCommittee, coordLinkedIn, coordGitHub }) => {
+const CoordCard = ({ coordName, coordCommittee, coordLinkedIn, coordGitHub, coordInsta, coordMail }) => {
   return (
     <div className={styles.coordCard}>
       <div className={styles.coordName}>{coordName}</div>
       <p>{coordCommittee}</p>
       <div className={styles.coordIcon}>
-        <a target="_blank" referrerPolicy="no-referrer" href={coordLinkedIn}>
-          <BsLinkedin color="white" />
-        </a>
-        {coordGitHub!='NA' && (
-          <a
+        {coordLinkedIn == undefined ? null : 
+          <a target="_blank" referrerPolicy="no-referrer" href={coordLinkedIn}>
+            <BsLinkedin color="white" />
+          </a>
+        }
+        {coordGitHub == undefined ? null : <a
             target="_blank"
             referrerPolicy="no-referrer"
             href={coordGitHub}
             style={{ marginLeft: '10px' }}>
             <BsGithub color="white" />
           </a>
-        )}
+        }
+        {
+          coordMail == undefined ? null : <a
+            target="_blank"
+            referrerPolicy="no-referrer"
+            href={coordMail}
+            style={{ marginLeft: '10px' }}>
+            <BsMailbox2 color="white" />
+          </a>
+        }
+        {
+          coordInsta == undefined ? null : <a
+            target="_blank"
+            referrerPolicy="no-referrer"
+            href={coordInsta}
+            style={{ marginLeft: '10px' }}>
+            <BsInstagram color="white" />
+          </a>
+        }
       </div>
     </div>
   );

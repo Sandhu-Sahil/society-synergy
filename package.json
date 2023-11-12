@@ -28,6 +28,7 @@
     "react-image-lightbox": "^5.1.4",
     "react-lottie": "^1.2.3",
     "react-parallax-tilt": "^1.7.167",
+    "react-router-dom": "^6.18.0",
     "react-toastify": "^8.1.0",
     "react-tsparticles": "^2.12.2",
     "styled-components": "^5.3.11",

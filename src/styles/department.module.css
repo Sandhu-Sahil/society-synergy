@@ -7,12 +7,14 @@
   align-items: center;
   height: fit-content;
   color: white;
-  position: relative;
+  position: absolute;
   z-index: 2;
 }
 
 .aboutDept {
-  height: 50vh;
+  /* height: 50vh; */
+  margin-top: 2rem;
+  margin-bottom: 3rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,7 +26,7 @@
   justify-content: space-between;
   align-items: center;
   width: 70vw;
-  margin: 10px 0 10px 0;
+  margin: 2rem 0 2.5rem 0;
 }
 .deptTitle h1 {
   color: #ff6559;
@@ -49,17 +51,13 @@
   padding-bottom: 7.5vh;
   display: flex;
   align-items: center;
-  gap: 50px;
+  gap: 10px;
 }
 
 .deptTitle img {
   height: 190px;
   margin: 0 50px 0 0;
   width: 190px;
-}
-
-.deptDesc div {
-  width: 100%;
 }
 
 .deptDesc p {
@@ -149,23 +147,28 @@
     margin: 5px 0 5px 0;
   }
   .aboutDept {
-    height: 50vh;
+    /* height: 50vh; */
   }
   .deptTitle {
     flex-direction: column-reverse;
     align-items: center;
-    width: 100%;
+    width: 90%;
     margin-top: 11px;
   }
   .deptTitle > div > h1 {
     font-size: 3rem;
-    white-space: nowrap;
+    white-space: wrap;
     margin-top: 10px;
     text-align: center;
   }
   .deptTitle > div > h4 {
     font-size: 1.2rem;
     text-align: center;
+  }
+  .deptTitle > div >div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .deptTitle img {
     margin: 0;
@@ -177,8 +180,7 @@
     width: 87vw;
   }
   .deptDesc div {
-    width: 80%;
-    margin: auto;
+    display: none;
   }
   .deptDesc p {
     width: 100%;

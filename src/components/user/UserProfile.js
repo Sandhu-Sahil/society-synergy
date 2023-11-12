@@ -86,7 +86,7 @@ export default function UserProfile(){
     return(
         <>
         <div>
-            <div className={styles.parentDiv}>
+            <div className={styles.parentDiv} style={{position:"relative",}}>
                 <div className={styles.aboutDept}>
                     <div className={styles.deptTitle}>
                         <div>
