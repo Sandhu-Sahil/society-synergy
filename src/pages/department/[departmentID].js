@@ -10,21 +10,17 @@ import GetDepartment from "@/services/department/GetDepartment";
 import Lottie from "react-lottie";
 import { BsGithub, BsInstagram, BsLink, BsLinkedin } from "react-icons/bs";
 
-export default function Department() {
+export default function Department({data}) {
     const [deptData, setDeptData] = useState(null);
     const [teamData, setTeamData] = useState(null);
     const [adminData, setAdminData] = useState(null);
     const [events, setEvents] = useState([]);
     const router = useRouter();
     useEffect(() => {
-        if(!router.query.departmentID) {
-          return;
-        }
         async function fetchdata() {
-            var res = await GetDepartment(router.query.departmentID);
-            setDeptData(res.data.club);
-            setTeamData(res.data.members);
-            setAdminData(res.data.admin);
+            setDeptData(data.club);
+            setTeamData(data.members);
+            setAdminData(data.admin);
         }
 
         fetchdata();
@@ -52,6 +48,12 @@ export default function Department() {
         </div>
         </>
     );
+}
+
+export async function getServerSideProps(context) { 
+  const res = await GetDepartment(context.query.departmentID);
+
+  return {props: {data: res.data}}
 }
 
 const DeptTitle = ({ deptName, deptCoordName, deptImage, deptWebsite, deptGithub, deptInsta, deptLinkIn }) => {

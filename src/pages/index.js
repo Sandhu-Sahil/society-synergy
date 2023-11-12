@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
 import DisplayLottie from '@/components/Lottie';
 import Background from '@/components/Background';
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import Lottie from 'react-lottie';
@@ -24,10 +24,8 @@ export default function Home({ data }) {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await GetHome();
-      setdepartments(res.data.clubs);
+      setdepartments(data.clubs);
     }
-    
     fetchData();
   }, [])
 
@@ -194,7 +192,7 @@ export default function Home({ data }) {
 }
 
 export async function getServerSideProps() { 
-  let dataFromSomeAPI = await axios.get(`${url}/api/v1/test/ping`)
+  const res = await GetHome();
 
-  return {props: {data: dataFromSomeAPI.data}}
+  return {props: {data: res.data}}
 }
