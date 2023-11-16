@@ -5,8 +5,9 @@ import Head from 'next/head';
 import { CoordCard, Footer, Header } from '@/components';
 import Background from '@/components/Background';
 import { motion } from 'framer-motion';
+import GetHome from '@/services/home/Home';
 
-export default function ContactUs() {
+export default function ContactUs({ data}) {
     const coords = [
         {
             name: 'Sahilsher Singh',
@@ -50,7 +51,7 @@ export default function ContactUs() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.png" />
             </Head>
-            <Header selected={'Contact'} />
+            <Header selected={'Contact'} departments={data.clubs}/>
             <Background />
             <div style={{ zIndex: '2', position: 'relative' }}>
             <section className={styles.section} style={{ width: '100%' }}>
@@ -88,4 +89,10 @@ export default function ContactUs() {
         </div>
         </>
     )
+}
+
+export async function getServerSideProps() { 
+    const res = await GetHome();
+  
+    return {props: {data: res.data}}
 }

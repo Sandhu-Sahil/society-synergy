@@ -2,8 +2,9 @@ import { Footer, Header } from "@/components";
 import Background from "@/components/Background";
 import Head from "next/head";
 import Register from "@/components/user/Register";
+import GetHome from "@/services/home/Home";
 
-export default function Profile() {
+export default function Profile({data}) {
 
     return (
         <>
@@ -13,10 +14,16 @@ export default function Profile() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.png" />
             </Head>
-            <Header selected={'Profile'}/>
+            <Header selected={'Profile'} departments={data.clubs}/>
             <Background />
             <Register />
             <Footer />
         </>
     )
+}
+
+export async function getServerSideProps() { 
+    const res = await GetHome();
+  
+    return {props: {data: res.data}}
 }

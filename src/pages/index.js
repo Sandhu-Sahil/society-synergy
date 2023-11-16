@@ -37,7 +37,7 @@ export default function Home({ data }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <Header selected={'Home'} />
+      <Header selected={'Home'} departments={data.clubs} />
       <Background />
       <div style={{ zIndex: '2', position: 'relative' }}>
         <section className={styles.heroSection}>

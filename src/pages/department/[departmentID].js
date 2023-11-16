@@ -9,8 +9,9 @@ import { useRouter } from 'next/router';
 import GetDepartment from "@/services/department/GetDepartment";
 import Lottie from "react-lottie";
 import { BsGithub, BsInstagram, BsLink, BsLinkedin } from "react-icons/bs";
+import GetHome from "@/services/home/Home";
 
-export default function Department({data}) {
+export default function Department({data , data2}) {
     const [deptData, setDeptData] = useState(null);
     const [teamData, setTeamData] = useState(null);
     const [adminData, setAdminData] = useState(null);
@@ -33,7 +34,7 @@ export default function Department({data}) {
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/favicon.png" />
         </Head>
-        <Header selected={'Departments'} />
+        <Header selected={'Departments'} departments={data2.clubs}/>
         <Background />
         <div className={styles.parentDiv}>
             <div className={styles.aboutDept}>
@@ -52,8 +53,9 @@ export default function Department({data}) {
 
 export async function getServerSideProps(context) { 
   const res = await GetDepartment(context.query.departmentID);
+  const res2 = await GetHome();
 
-  return {props: {data: res.data}}
+  return {props: {data: res.data , data2: res2.data}}
 }
 
 const DeptTitle = ({ deptName, deptCoordName, deptImage, deptWebsite, deptGithub, deptInsta, deptLinkIn }) => {

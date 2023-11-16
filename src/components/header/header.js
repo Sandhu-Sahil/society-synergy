@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import GetHome from '@/services/home/Home';
 
-const HeaderComp = ({ selected }) => {
+const HeaderComp = ({ selected, data }) => {
   const [isDrawerVisible, setDrawerVisibility] = useState(false);
   const [isResourceDrawerVisible, setResourceDrawerVisibility] = useState(false);
   const [isMenuVisible, setMenuVisibility] = useState(false);
-  const [departments, setdepartments] = useState([]);
+  const [departments, setdepartments] = useState(data);
 
   const drawerHandleMouse = () => {
     setDrawerVisibility((current) => !current);
@@ -25,15 +25,6 @@ const HeaderComp = ({ selected }) => {
     setDrawerVisibility(false);
     setResourceDrawerVisibility(false);
   };
-
-  useEffect(() => {
-    async function fetchData() {
-      const res = await GetHome();
-      setdepartments(res.data.clubs);
-    }
-    
-    fetchData();
-  }, []);
 
   return (
     <>
@@ -155,7 +146,7 @@ const DeptDrawer = ({ isVisible, departments }) => {
   );
 };
 
-const Header = ({ selected }) => {
+const Header = ({ selected, departments }) => {
   const [isElevated, setIsElevated] = useState(false);
 
   useEffect(() => {
@@ -180,7 +171,7 @@ const Header = ({ selected }) => {
         }}
         className={styles.header}
       >
-        <HeaderComp selected={selected} />
+        <HeaderComp selected={selected} data={departments} />
       </header>
       <header
         style={{
@@ -191,7 +182,7 @@ const Header = ({ selected }) => {
         className={styles.header}
         id={styles.copy}
       >
-        <HeaderComp selected={selected} />
+        <HeaderComp selected={selected} data={departments} />
       </header>
     </>
   );
