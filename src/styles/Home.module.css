@@ -85,7 +85,7 @@
   flex-wrap: wrap;
 }
 .cardSection div {
-  margin-inline: 5px;
+  /* margin-inline: 5px; */
 }
 .sectionHeading {
   font-size: 1.6rem;

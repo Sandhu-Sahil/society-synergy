@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
 import DisplayLottie from '@/components/Lottie';
 import Background from '@/components/Background';
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import Lottie from 'react-lottie';
@@ -13,21 +13,45 @@ import { toast } from 'react-toastify';
 import url from '@/services/index'
 import { useRouter } from 'next/router';
 import GetHome from '@/services/home/Home'
+import Carousel from "react-elastic-carousel";
+
+const breakPoints = [
+  { width: 1, itemsToShow: 1 },
+  { width: 550, itemsToShow: 1, itemsToScroll: 2 },
+  { width: 768, itemsToShow: 3 },
+  { width: 1200, itemsToShow: 4 }
+];
 
 toast.configure();
 export default function Home({ data }) {
   const [maindata, setmaindata] = useState(data);
   const [bgColor, setbgColor] = useState(["#FF6559","#0091BD","#FFAC2A","#ff80ab"]);
   const [departments, setdepartments] = useState([]);
+  const [filteredEvents, setfilteredEvents] = useState([]);
 
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
+  const carouselRef = React.useRef(null);
 
   useEffect(() => {
     async function fetchData() {
       setdepartments(data.clubs);
+      setfilteredEvents([...data.events]);
     }
     fetchData();
   }, [])
+
+  const onNextStart = (currentItem, nextItem) => {
+    if (currentItem.index === nextItem.index) {
+      // we hit the last item, go to first item
+      carouselRef.current.goTo(0);
+    }
+  };
+  const onPrevStart = (currentItem, nextItem) => {
+    if (currentItem.index === nextItem.index) {
+      // we hit the first item, go to last item
+      carouselRef.current.goTo(filteredEvents.length);
+    }
+  };
 
   return (
     <>
@@ -79,29 +103,64 @@ export default function Home({ data }) {
         <section className={styles.section}>
           <h2 className={styles.sectionHeading}>Upcoming Events</h2>
           <div className={styles.cardSection}>
-            {/* {filteredEvents.map((event, index) => (
-              //   {event.old === false && (
+          <Carousel breakPoints={breakPoints}
+            ref={carouselRef}
+            enableMouseSwipe={true}
+            enableAutoPlay={true}
+            enableSwipe={true}
+            onChange={({ index }) => {
+              // change index according to width of screen to show 1, 2, 3 or 4 cards
+              if (window.innerWidth <= 550) {
+                index = index + 0;
+              } else if (window.innerWidth <= 768) {
+                index = index + 1;
+              } else if (window.innerWidth <= 1200) {
+                index = index + 2;
+              } else {
+                index = index + 3;
+              }
+              if (index === filteredEvents.length - 1) {
+                // set crousel to start
+                carouselRef.current.goTo(0);
+              }
+            }}
+            onPrevStart={onPrevStart}
+            onNextStart={onNextStart}
+            focusOnSelect={true}
+            autoPlaySpeed={2000}
+            transitionMs={2000}
+            easing="ease-in-out"
+            tiltEasing="ease-in-out"
+            tiltMaxAngleX={10}
+            tiltMaxAngleY={10}
+            tiltAngleXInitial={0}
+            tiltAngleYInitial={0}
+            tiltEnable={true}
+            tiltReverse={true}
+            disableArrowsOnEnd={false}
+          >
+            {filteredEvents.map((event, i) => (
               <motion.div
                 className={styles.card}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ duration: 1, delay: index * 0.2 }}
+                transition={{ duration: 1, delay: i * 0.2 }}
                 variants={{
                   visible: { opacity: 1, scale: 1 },
                   hidden: { opacity: 0, scale: 0 }
                 }}
               >
                 <EventCard
-                  key={event.key}
-                  old={event.old}
-                  eventName={event.eventName}
-                  desc={event.desc}
-                  image={event.image}
-                  registerLink={event.registerLink}
+                  key={event?._id}
+                  eventName={event?.name.slice(0, 30) + '...'}
+                  desc={event?.description.slice(0, 200) + '...'}
+                  image={event?.posterUrl}
+                  href={"/event/"+event?._id}
                 />
               </motion.div>
-            ))} */}
+            ))}
+          </Carousel>
           </div>
         </section>
         <section className={styles.section}>
