@@ -129,7 +129,7 @@ const MenuDrawer = ({
         CONTACT
       </Link>
       <Link id={selected == 'Profile' ? styles.selected : undefined} href="/profile">
-        PROFILE
+        {cookies?.jwtSandhuToken ? 'PROFILE' : 'SIGN-UP'}
       </Link>
     </section>
   );
