@@ -69,6 +69,7 @@ export default function Rregister(){
           });
     }
     const handleSubmit2 = async (email, token) => {
+        setCookie('SandhuOtpEmail', email, { path: '/' });
         const res = await OtpSend(token)
           .then((res) => {
             toast.success(res.data.message, {
