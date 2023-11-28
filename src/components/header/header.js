@@ -102,6 +102,7 @@ const MenuDrawer = ({
   isResourceDrawerVisible,
   departments
 }) => {
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
   return (
     <section id={styles.menuDrawerVisible}>
       <Link id={selected == 'Home' ? styles.selected : undefined} href="/">
