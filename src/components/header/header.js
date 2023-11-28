@@ -3,12 +3,15 @@ import styles from './header.module.css';
 import Link from 'next/link';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import GetHome from '@/services/home/Home';
+import { useCookies } from 'react-cookie';
 
 const HeaderComp = ({ selected, data }) => {
   const [isDrawerVisible, setDrawerVisibility] = useState(false);
   const [isResourceDrawerVisible, setResourceDrawerVisibility] = useState(false);
   const [isMenuVisible, setMenuVisibility] = useState(false);
   const [departments, setdepartments] = useState(data);
+
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
   const drawerHandleMouse = () => {
     setDrawerVisibility((current) => !current);
@@ -69,7 +72,8 @@ const HeaderComp = ({ selected, data }) => {
           id={selected == 'Profile' ? styles.selected : undefined}
           href="/profile"
         >
-          PROFILE
+          {/* if cookies 'jwtSandhuToken' then return Profile else sign-up */}
+          {cookies?.jwtSandhuToken ? 'PROFILE' : 'SIGN-UP'} 
         </Link>
       </section>
       <div id={styles.menuButton} onMouseLeave={menuHandleMouseLeave}>

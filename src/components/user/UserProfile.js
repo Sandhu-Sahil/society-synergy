@@ -83,6 +83,12 @@ export default function UserProfile(){
           });
     }
 
+    const logout = () => {
+        removeCookie('jwtSandhuToken', { path: '/' });
+        removeCookie('user', { path: '/' });
+        router.push('/profile');
+    }
+
     return(
         <>
         <div>
@@ -101,6 +107,7 @@ export default function UserProfile(){
                         <button onClick={updateProfile} className={styles.btn}>Edit Profile</button>
                         <button onClick={changePassword} className={styles.btn}>Change Password</button>
                         {user?.varified == false ? <button onClick={varifyUser} className={styles.btn}>Verify</button> : <></>   }
+                        <button onClick={logout} className={styles.btn}>Logout</button>
                     </div>
                 </div>
                 <EventCards events={events} />
