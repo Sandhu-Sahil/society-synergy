@@ -10,22 +10,25 @@ import Lottie from "react-lottie";
 import { BsGithub, BsInstagram, BsLink, BsLinkedin } from "react-icons/bs";
 import GetHome from "@/services/home/Home";
 import GetEvent from "@/services/event/GetEvent";
+import { useCookies } from "react-cookie";
+import RsvpUser from "@/services/event/RsvpUser";
+import { toast } from "react-toastify";
+import RsvpButton from "@/components/RsvpButton";
 
+toast.configure();
 export default function Event({data , data2}) {
     const [deptData, setDeptData] = useState(null);
-    const [teamData, setTeamData] = useState(null);
-    const [adminData, setAdminData] = useState(null);
-    const [events, setEvents] = useState([]);
+    const [event, setEvent] = useState([]);
     const router = useRouter();
+    const [cookies, setCookie, removeCookie] = useCookies(['user']);
     useEffect(() => {
         async function fetchdata() {
             setDeptData(data.club);
-            setTeamData(data.members);
-            setAdminData(data.admin);
+            setEvent(data.event);
         }
-
         fetchdata();
     }, []);
+    
     return (
         <>
         <Head>
@@ -37,14 +40,13 @@ export default function Event({data , data2}) {
         <Header selected={'Departments'} departments={data2.clubs}/>
         <Background />
         <div className={styles.parentDiv}>
-            {/* <div className={styles.aboutDept}>
-            <DeptTitle deptName={deptData?.name} deptCoordName={adminData?.firstName +" "+ adminData?.lastName} deptImage={deptData?.logoUrl} 
+            <div className={styles.aboutDept}>
+            <DeptTitle deptName={event?.name} deptCoordName={deptData?.name} deptImage={event?.posterUrl} 
                 deptGithub={deptData?.github} deptInsta={deptData?.instagram} deptLinkIn={deptData?.linkedIn} deptWebsite={deptData?.website}
-              />
-            <DeptDescription deptDesc={deptData?.description} />
+            />
+            <DeptDescription deptDesc={event?.description} />
+            <RsvpButton rsvpEvent={event?._id} deptid={deptData?._id}/>
             </div>
-            <EventCards events={events} />
-            <CoordSection coordArr={adminData} subCoordArr={teamData} /> */}
             <Footer />
         </div>
         </>
@@ -57,3 +59,61 @@ export async function getServerSideProps(context) {
 
   return {props: {data: res.data , data2: res2.data}}
 }
+
+const DeptTitle = ({ deptName, deptCoordName, deptImage, deptWebsite, deptGithub, deptInsta, deptLinkIn }) => {
+    return (
+      <div className={styles.deptTitle}>
+        <div>
+          <h1>{deptName}</h1>
+          <h4>Coordinator(s): {deptCoordName}</h4>
+          <div style={{marginTop:"1rem"}}>
+            {
+              deptInsta == "" ? null : <a
+                target="_blank"
+                referrerPolicy="no-referrer"
+                href={deptInsta}
+                style={{ marginLeft: '10px' }}>
+                <BsInstagram color="white" />
+              </a>
+            }
+            {
+              deptLinkIn == "" ? null : <a
+                target="_blank"
+                referrerPolicy="no-referrer"
+                href={deptLinkIn}
+                style={{ marginLeft: '10px' }}>
+                <BsLinkedin color="white" />
+              </a>
+            }
+            {
+              deptGithub == "" ? null : <a
+                target="_blank"
+                referrerPolicy="no-referrer"
+                href={deptGithub}
+                style={{ marginLeft: '10px' }}>
+                <BsGithub color="white" />
+              </a>
+            }
+            {
+              deptWebsite == "" ? null : <a
+                target="_blank"
+                referrerPolicy="no-referrer"
+                href={deptWebsite}
+                style={{ marginLeft: '10px' }}>
+                <BsLink color="white" />
+              </a>
+            }
+          </div>
+        </div>
+        <img src={deptImage} loading="lazy" />
+      </div>
+    );
+};
+
+const DeptDescription = ({ deptDesc }) => {
+    return (
+      <div className={styles.deptDesc}>
+        <p>{deptDesc}</p>
+      </div>
+    );
+};

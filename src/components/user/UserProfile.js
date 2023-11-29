@@ -1,12 +1,20 @@
 import { toast } from "react-toastify";
 import styles from '../../styles/department.module.css';
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import GetUser from "@/services/userService/GetUser";
 import EventCard from "../eventCard/eventCard";
 import { motion } from "framer-motion";
 import OtpSend from "@/services/userService/OtpSend";
 import { useRouter } from "next/router";
+import Carousel from "react-elastic-carousel";
+
+const breakPoints = [
+    { width: 1, itemsToShow: 1 },
+    { width: 550, itemsToShow: 1, itemsToScroll: 2 },
+    { width: 768, itemsToShow: 3 },
+    { width: 1200, itemsToShow: 4 }
+];
 
 toast.configure();
 export default function UserProfile(){
@@ -14,11 +22,14 @@ export default function UserProfile(){
     const [user, setUser] = useState(null);
     const [events, setEvents] = useState([]);
     const router = useRouter();
+    const [isClient, setIsClient] = useState(false);
     
     useEffect(() => {
         async function fetchdata() {
             let dataFromSomeAPI = await GetUser(0, cookies.jwtSandhuToken);
-            setUser(dataFromSomeAPI.data.data);
+            console.log(dataFromSomeAPI);
+            setUser(dataFromSomeAPI?.data?.data?.user);
+            setEvents(dataFromSomeAPI?.data?.data?.events);
         }
         async function fetchdata2() {
             // let dataFromSomeAPI = await GetEvents();
@@ -29,6 +40,7 @@ export default function UserProfile(){
             fetchdata();
             fetchdata2();
         }
+        setIsClient(true)
     }, [cookies])
 
     const varifyUser = async () => {
@@ -110,7 +122,7 @@ export default function UserProfile(){
                         <button onClick={logout} className={styles.btn}>Logout</button>
                     </div>
                 </div>
-                <EventCards events={events} />
+                <EventCards events={isClient ? events : null} />
             </div>
         </div>
         </>
@@ -118,14 +130,62 @@ export default function UserProfile(){
 }
   
 const EventCards = ({ events }) => {
+    const carouselRef = React.useRef(null);
+    const onNextStart = (currentItem, nextItem) => {
+      if (currentItem.index === nextItem.index) {
+        // we hit the last item, go to first item
+        carouselRef.current.goTo(0);
+      }
+    };
+    const onPrevStart = (currentItem, nextItem) => {
+      if (currentItem.index === nextItem.index) {
+        // we hit the first item, go to last item
+        carouselRef.current.goTo(events.length);
+      }
+    };
 return (
     <div className={styles.section}>
     <h2 className={styles.sectionHeading}>Events marked RSVP</h2>
 
     <motion.div className={styles.cardSection}>
         {events?.length > 0 ? (
-        events.map((event, index) => (
-            //   {event.old === false && (
+            <Carousel breakPoints={breakPoints}
+            ref={carouselRef}
+            enableMouseSwipe={true}
+            enableAutoPlay={true}
+            enableSwipe={true}
+            onChange={({ index }) => {
+              // change index according to width of screen to show 1, 2, 3 or 4 cards
+              if (window.innerWidth <= 550) {
+                index = index + 0;
+              } else if (window.innerWidth <= 768) {
+                index = index + 1;
+              } else if (window.innerWidth <= 1200) {
+                index = index + 2;
+              } else {
+                index = index + 3;
+              }
+              if (index === events.length - 1) {
+                // set crousel to start
+                carouselRef.current.goTo(0);
+              }
+            }}
+            onPrevStart={onPrevStart}
+            onNextStart={onNextStart}
+            focusOnSelect={true}
+            autoPlaySpeed={2000}
+            transitionMs={2000}
+            easing="ease-in-out"
+            tiltEasing="ease-in-out"
+            tiltMaxAngleX={10}
+            tiltMaxAngleY={10}
+            tiltAngleXInitial={0}
+            tiltAngleYInitial={0}
+            tiltEnable={true}
+            tiltReverse={true}
+            disableArrowsOnEnd={false}
+          >
+            {events?.map((event, index) => (
             <motion.div
             key={event.key}
             className={styles.card}
@@ -138,16 +198,16 @@ return (
                 hidden: { opacity: 0, scale: 0 }
             }}
             >
-            {/* <EventCard
-                key={event.key}
-                old={event.old}
-                eventName={event.eventName}
-                desc={event.desc}
-                image={event.image}
-                registerLink={event.registerLink}
-            /> */}
+            <EventCard
+                key={event?.eventDetails?._id}
+                eventName={event?.eventDetails?.name.slice(0, 30) + '...'}
+                desc={event?.eventDetails?.description.slice(0, 200) + '...'}
+                image={event?.eventDetails?.posterUrl}
+                href={"/event/"+event?.eventDetails?._id}
+            />
             </motion.div>
-        ))
+            ))}
+            </Carousel>
         ) : (
         <h2 style={{ color: 'gainsboro' }}>No Events</h2>
         )}

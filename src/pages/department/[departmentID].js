@@ -11,6 +11,7 @@ import Lottie from "react-lottie";
 import { BsGithub, BsInstagram, BsLink, BsLinkedin } from "react-icons/bs";
 import GetHome from "@/services/home/Home";
 import Carousel from "react-elastic-carousel";
+import { toast } from "react-toastify";
 
 const breakPoints = [
   { width: 1, itemsToShow: 1 },
@@ -19,6 +20,7 @@ const breakPoints = [
   { width: 1200, itemsToShow: 4 }
 ];
 
+toast.configure();
 export default function Department({data , data2}) {
     const [deptData, setDeptData] = useState(null);
     const [teamData, setTeamData] = useState(null);
@@ -147,7 +149,7 @@ const EventCards = ({ events }) => {
     const onPrevStart = (currentItem, nextItem) => {
       if (currentItem.index === nextItem.index) {
         // we hit the first item, go to last item
-        carouselRef.current.goTo(filteredEvents.length);
+        carouselRef.current.goTo(events.length);
       }
     };
     return (
@@ -172,7 +174,7 @@ const EventCards = ({ events }) => {
                 } else {
                   index = index + 3;
                 }
-                if (index === filteredEvents.length - 1) {
+                if (index === events.length - 1) {
                   // set crousel to start
                   carouselRef.current.goTo(0);
                 }

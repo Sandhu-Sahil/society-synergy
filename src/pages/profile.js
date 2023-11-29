@@ -6,7 +6,9 @@ import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 import GetUser from "@/services/userService/GetUser";
 import GetHome from "@/services/home/Home";
+import { toast } from "react-toastify";
 
+toast.configure();
 export default function Profile( {data}) {
     return (
         <>

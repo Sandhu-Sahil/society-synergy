@@ -10,8 +10,13 @@ const HeaderComp = ({ selected, data }) => {
   const [isResourceDrawerVisible, setResourceDrawerVisibility] = useState(false);
   const [isMenuVisible, setMenuVisibility] = useState(false);
   const [departments, setdepartments] = useState(data);
+  const [isClient, setIsClient] = useState(false)
 
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const drawerHandleMouse = () => {
     setDrawerVisibility((current) => !current);
@@ -73,7 +78,7 @@ const HeaderComp = ({ selected, data }) => {
           href="/profile"
         >
           {/* if cookies 'jwtSandhuToken' then return Profile else sign-up */}
-          {cookies?.jwtSandhuToken ? 'PROFILE' : 'SIGN-UP'} 
+          {isClient ? cookies?.jwtSandhuToken ? 'PROFILE' : 'SIGN-UP' : null} 
         </Link>
       </section>
       <div id={styles.menuButton} onMouseLeave={menuHandleMouseLeave}>
@@ -86,6 +91,7 @@ const HeaderComp = ({ selected, data }) => {
             resourceDrawerHandleMouse={resourceDrawerHandleMouse}
             isResourceDrawerVisible={isResourceDrawerVisible}
             departments={departments}
+            isClient={isClient}
           />
         )}
       </div>
@@ -100,7 +106,8 @@ const MenuDrawer = ({
   drawerHandleMouse,
   resourceDrawerHandleMouse,
   isResourceDrawerVisible,
-  departments
+  departments,
+  isClient
 }) => {
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
   return (
@@ -130,7 +137,7 @@ const MenuDrawer = ({
         CONTACT
       </Link>
       <Link id={selected == 'Profile' ? styles.selected : undefined} href="/profile">
-        {cookies?.jwtSandhuToken ? 'PROFILE' : 'SIGN-UP'}
+      {isClient ? cookies?.jwtSandhuToken ? 'PROFILE' : 'SIGN-UP' : null} 
       </Link>
     </section>
   );

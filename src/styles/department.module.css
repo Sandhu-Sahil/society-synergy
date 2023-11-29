@@ -71,7 +71,7 @@
 .section {
   display: grid;
   margin-bottom: 50px;
-  width: 90vw;
+  width: 100vw;
 }
 
 .cardSection {
@@ -96,7 +96,7 @@
 }
 
 .section .cardSection div {
-  margin-inline: 5px;
+  /* margin-inline: 5px; */
 }
 
 .sectionHeading {
@@ -133,6 +133,28 @@
 }
 
 .btn:hover {
+  background-color: #ff6559;
+  color: white;
+}
+
+.rsvpbtn{
+  background-color: transparent;
+  border: 1px solid #ff6559;
+  border-radius: 5px;
+  color: #ff6559;
+  cursor: pointer;
+  font-family: Josefin Sans;
+  font-size: 1.5rem;
+  font-weight: 900;
+  padding: 10px 5px 5px 5px;
+  margin: 0 10px 0 10px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+}
+
+.rsvpbtn:hover {
   background-color: #ff6559;
   color: white;
 }
