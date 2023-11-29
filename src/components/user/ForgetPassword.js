@@ -10,7 +10,6 @@ import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 import OtpSendByEmailApi from '@/services/userService/OtpByEmail';
 
-toast.configure();
 export default function ForgetPassword(){
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
     const router = useRouter();

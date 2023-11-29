@@ -13,7 +13,6 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import OtpSend from '@/services/userService/OtpSend';
 
-toast.configure();
 export default function Rregister(){
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
     const router = useRouter();

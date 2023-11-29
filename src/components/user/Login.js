@@ -12,7 +12,6 @@ import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-toast.configure();
 export default function Login(){
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
     const router = useRouter();

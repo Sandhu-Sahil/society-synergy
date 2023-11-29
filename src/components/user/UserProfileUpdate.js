@@ -15,7 +15,6 @@ import OtpSend from '@/services/userService/OtpSend';
 import GetUser from '@/services/userService/GetUser';
 import UpdateUser from '@/services/userService/UpdateUser';
 
-toast.configure();
 export default function UpdateProfile(){
     const [user, setUser] = useState(null);
     const [cookies, setCookie, removeCookie] = useCookies(['user']);

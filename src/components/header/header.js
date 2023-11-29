@@ -4,6 +4,9 @@ import Link from 'next/link';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import GetHome from '@/services/home/Home';
 import { useCookies } from 'react-cookie';
+import { toast } from 'react-toastify';
+
+toast.configure();
 
 const HeaderComp = ({ selected, data }) => {
   const [isDrawerVisible, setDrawerVisibility] = useState(false);

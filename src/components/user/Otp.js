@@ -10,7 +10,6 @@ import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 import OtpApi from '@/services/userService/Otp';
 
-toast.configure();
 export default function Otp(){
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
     const router = useRouter();

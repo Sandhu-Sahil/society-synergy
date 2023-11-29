@@ -4,10 +4,9 @@ import { useRouter } from 'next/router';
 import { useCookies } from "react-cookie";
 import RsvpUser from "@/services/event/RsvpUser";
 import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
-toast.configure();
 export default function RsvpButton({rsvpEvent, deptid}) {
-
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
     const router = useRouter();
 
@@ -15,6 +14,10 @@ export default function RsvpButton({rsvpEvent, deptid}) {
         // check if user is logged in
         if(!cookies?.jwtSandhuToken){
             router.push('/profile');
+            toast.error("You need to login first", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2500,
+            });
             return;
         }
 

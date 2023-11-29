@@ -10,7 +10,6 @@ import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 import ChangepasswordApi from '@/services/userService/Changepassword';
 
-toast.configure();
 export default function ChangePassword(){
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
     const router = useRouter();

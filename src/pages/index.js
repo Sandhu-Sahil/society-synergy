@@ -22,7 +22,6 @@ const breakPoints = [
   { width: 1200, itemsToShow: 4 }
 ];
 
-toast.configure();
 export default function Home({ data }) {
   const [maindata, setmaindata] = useState(data);
   const [bgColor, setbgColor] = useState(["#FF6559","#0091BD","#FFAC2A","#ff80ab"]);

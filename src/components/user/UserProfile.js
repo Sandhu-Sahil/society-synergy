@@ -16,7 +16,6 @@ const breakPoints = [
     { width: 1200, itemsToShow: 4 }
 ];
 
-toast.configure();
 export default function UserProfile(){
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
     const [user, setUser] = useState(null);
@@ -98,12 +97,16 @@ export default function UserProfile(){
     const logout = () => {
         removeCookie('jwtSandhuToken', { path: '/' });
         removeCookie('user', { path: '/' });
+        toast.success("Logged out successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2500,
+        });
         router.push('/profile');
     }
 
     return(
-        <>
-        <div>
+        <>{
+            isClient ? <>
             <div className={styles.parentDiv} style={{position:"relative",}}>
                 <div className={styles.aboutDept}>
                     <div className={styles.deptTitle}>
@@ -124,7 +127,8 @@ export default function UserProfile(){
                 </div>
                 <EventCards events={isClient ? events : null} />
             </div>
-        </div>
+          </> : <></>
+          }
         </>
     )
 }

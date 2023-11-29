@@ -12,10 +12,10 @@ import GetHome from "@/services/home/Home";
 import GetEvent from "@/services/event/GetEvent";
 import { useCookies } from "react-cookie";
 import RsvpUser from "@/services/event/RsvpUser";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import RsvpButton from "@/components/RsvpButton";
 
-toast.configure();
+// toast.configure();
 export default function Event({data , data2}) {
     const [deptData, setDeptData] = useState(null);
     const [event, setEvent] = useState([]);
