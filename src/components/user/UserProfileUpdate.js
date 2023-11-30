@@ -23,16 +23,16 @@ export default function UpdateProfile(){
     useEffect(() => {
         async function fetchdata() {
             let dataFromSomeAPI = await GetUser(0, cookies.jwtSandhuToken);
-            setUser(dataFromSomeAPI.data.data);
+            setUser(dataFromSomeAPI.data.data.user);
             formik.setFieldValue('otp', '');
-            formik.setFieldValue('firstName', dataFromSomeAPI.data.data.firstName);
-            formik.setFieldValue('lastName', dataFromSomeAPI.data.data.lastName);
-            formik.setFieldValue('userName', dataFromSomeAPI.data.data.userName);
+            formik.setFieldValue('firstName', dataFromSomeAPI.data.data.user.firstName);
+            formik.setFieldValue('lastName', dataFromSomeAPI.data.data.user.lastName);
+            formik.setFieldValue('userName', dataFromSomeAPI.data.data.user.userName);
             // remove +91 from phoneNo
-            let tempPhoneNo = dataFromSomeAPI.data.data.phoneNo;
+            let tempPhoneNo = dataFromSomeAPI.data.data.user.phoneNo;
             tempPhoneNo = tempPhoneNo.slice(3);
             formik.setFieldValue('phoneNo', tempPhoneNo);
-            formik.setFieldValue('email', dataFromSomeAPI.data.data.email);
+            formik.setFieldValue('email', dataFromSomeAPI.data.data.user.email);
         }
         
         if (cookies.jwtSandhuToken){

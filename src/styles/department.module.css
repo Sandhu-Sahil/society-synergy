@@ -78,7 +78,7 @@
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-evenly !important;
   margin-bottom: 30px;
   row-gap: 40px;
   width: inherit;
