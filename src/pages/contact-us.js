@@ -57,7 +57,7 @@ export default function ContactUs({ data}) {
             <div style={{ zIndex: '2', position: 'relative' }}>
             <section className={styles.section} style={{ width: '100%' }}>
                 <h3>Coordinators</h3>
-                <div className={styles.cardSection} style={{ justifyContent: 'center' }}>
+                <div className={styles.cardSection}>
                     {coords.map(
                     (member, index) =>
                      (
