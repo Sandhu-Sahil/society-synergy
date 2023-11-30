@@ -7,7 +7,6 @@ import Background from '@/components/Background';
 import { motion } from 'framer-motion';
 import GetHome from '@/services/home/Home';
 
-toast.configure();
 export default function ContactUs({ data}) {
     const coords = [
         {
